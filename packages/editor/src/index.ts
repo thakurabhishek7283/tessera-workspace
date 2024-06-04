@@ -7,6 +7,7 @@ export {
   type ToolbarItem,
   ToolbarItemSchema,
 } from './config.js';
+export { editorPlugin as default, editorPlugin } from './plugin.js';
 export { isSafeImage, isSafeUrl, type RenderOptions, renderStatic } from './render.js';
 export {
   compactRichDoc,
@@ -21,3 +22,18 @@ export {
   toPlainText,
 } from './rich-doc.js';
 export { type SanitizeOptions, sanitizeHtml } from './sanitize.js';
+export type {
+  ContentFormat,
+  EditorCommand,
+  EditorHandle,
+  EditorOptions,
+  EditorService,
+  EditorState,
+  EditorValue,
+  MentionItem,
+  ParametricCommand,
+  Rect,
+  SimpleCommand,
+  SlashItem,
+  SuggestState,
+} from './types.js';
