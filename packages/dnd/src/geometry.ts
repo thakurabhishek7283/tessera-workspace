@@ -41,7 +41,10 @@ export function distanceTo(box: Box, p: Point): number {
  * The container the pointer is over; otherwise the nearest one, so dragging through a gap
  * between columns keeps the last sensible target. Returns `undefined` for an empty list.
  */
-export function pickContainer<T extends { box: Box }>(candidates: readonly T[], point: Point): T | undefined {
+export function pickContainer<T extends { box: Box }>(
+  candidates: readonly T[],
+  point: Point,
+): T | undefined {
   const inside = candidates.find((c) => contains(c.box, point));
   if (inside) return inside;
   let best: T | undefined;
