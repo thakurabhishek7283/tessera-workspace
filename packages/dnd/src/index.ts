@@ -13,5 +13,6 @@ export {
   type DndItem,
   type MoveEvent,
   type Sortable,
+  type SortableMessages,
   type SortableOptions,
 } from './sortable.js';

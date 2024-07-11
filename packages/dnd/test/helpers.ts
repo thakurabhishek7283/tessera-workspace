@@ -95,3 +95,13 @@ export const frames = async (n = 2): Promise<void> => {
 /** Order of item ids per column as currently in the DOM. */
 export const order = (board: Board): Record<string, string[]> =>
   Object.fromEntries(board.containers().map((c) => [c.id, c.items().map((i) => i.id)]));
+
+export const messages = {
+  lifted: (n: string, p: number, t: number, c: string) =>
+    `Lifted ${n}, position ${p} of ${t} in ${c}`,
+  moved: (n: string, p: number, t: number, c: string) =>
+    `Moved ${n} to position ${p} of ${t} in ${c}`,
+  dropped: (n: string, p: number, t: number, c: string) =>
+    `Dropped ${n} at position ${p} of ${t} in ${c}`,
+  cancelled: (n: string) => `Cancelled moving ${n}`,
+};

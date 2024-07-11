@@ -1,9 +1,28 @@
 import { cleanup, must } from '@tessera-internal/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createSortable, type MoveEvent } from '../src/index.js';
-import { center, createBoard, frames, pointerDown, pointerMove, pointerUp } from './helpers.js';
+import { createSortable as create, type MoveEvent, type Sortable } from '../src/index.js';
+import {
+  center,
+  createBoard,
+  frames,
+  messages,
+  pointerDown,
+  pointerMove,
+  pointerUp,
+} from './helpers.js';
 
-afterEach(cleanup);
+const created: Sortable[] = [];
+/** Every sortable is destroyed after its test so document-level listeners cannot leak between tests. */
+const createSortable = (...args: Parameters<typeof create>): Sortable => {
+  const sortable = create(...args);
+  created.push(sortable);
+  return sortable;
+};
+
+afterEach(() => {
+  for (const sortable of created.splice(0)) sortable.destroy();
+  cleanup();
+});
 
 function setup(
   layout: Record<string, string[]>,
@@ -11,11 +30,14 @@ function setup(
 ) {
   const board = createBoard(layout, { handle: Boolean(opts.handleSelector) });
   const onMove = vi.fn<(e: MoveEvent) => void>();
+  const announced: string[] = [];
   const sortable = createSortable({
     root: must(board.host.shadowRoot),
     containers: board.containers,
     axis: 'vertical',
     onMove,
+    announce: (m) => announced.push(m),
+    messages,
     ...opts,
   });
   const item = (id: string) => must(board.items.get(id), id);
@@ -28,7 +50,7 @@ function setup(
     }
     await frames(2);
   };
-  return { board, onMove, sortable, item, drag };
+  return { board, onMove, sortable, item, drag, announced };
 }
 
 describe('pointer dragging', () => {
@@ -126,6 +148,20 @@ describe('pointer dragging', () => {
     ).toBeNull();
     expect(document.querySelector('[data-dnd-ghost]')).toBeNull();
     expect(document.documentElement.hasAttribute('data-dnd-active')).toBe(false);
+  });
+
+  it('announces a drop and a cancel', async () => {
+    const { drag, item, announced } = setup({ a: ['1', '2'], b: ['x'] });
+    const x = center(item('x'));
+    await drag('1', { x: x.x, y: x.y + 20 });
+    pointerUp(x.x, x.y + 20);
+    await frames();
+    expect(announced).toEqual(['Dropped 1 at position 2 of 2 in b']);
+    await drag('2', { x: x.x, y: x.y });
+    document.dispatchEvent(
+      new KeyboardEvent('keydown', { key: 'Escape', bubbles: true, cancelable: true }),
+    );
+    expect(announced.at(-1)).toBe('Cancelled moving 2');
   });
 
   it('marks the last item when dropping at the end', async () => {
@@ -236,6 +272,8 @@ describe('pointer dragging', () => {
         board.containers().map((c) => (c.id === 'b' ? { ...c, accepts: () => false } : c)),
       axis: 'vertical',
       onMove,
+      announce: () => undefined,
+      messages,
       canDrag: (id) => id !== '2',
     });
     const one = must(board.items.get('1'));
