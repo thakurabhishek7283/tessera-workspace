@@ -1,4 +1,5 @@
-import { type Axis, type Box, dropIndex, pickContainer } from './geometry.js';
+import { type Axis, type Box, dropIndex, edgeSpeed, pickContainer } from './geometry.js';
+import { scrollParents } from './scroll.js';
 
 export interface DndItem {
   id: string;
@@ -198,6 +199,39 @@ export function createSortable(options: SortableOptions): Sortable {
     }
   };
 
+  /**
+   * Scrolls whichever ancestors of the hovered list the pointer is pushing against, a little more
+   * the closer it gets to their edge. Returns true when something moved.
+   */
+  const autoScroll = (state: Drag): boolean => {
+    const container = options.containers().find((c) => c.id === state.target.container);
+    if (!container) return false;
+    const page = document.scrollingElement;
+    const usedAxes = new Set<'x' | 'y'>();
+    let scrolled = false;
+    for (const scroller of [container.el, ...scrollParents(container.el)]) {
+      const isPage = scroller === page;
+      const box = isPage
+        ? { left: 0, top: 0, right: window.innerWidth, bottom: window.innerHeight }
+        : rectOf(scroller);
+      const inside =
+        state.pointer.x >= box.left &&
+        state.pointer.x <= box.right &&
+        state.pointer.y >= box.top &&
+        state.pointer.y <= box.bottom;
+      if (!inside) continue;
+      const dy = edgeSpeed(state.pointer.y, box.top, box.bottom);
+      const dx = edgeSpeed(state.pointer.x, box.left, box.right);
+      const before = { x: scroller.scrollLeft, y: scroller.scrollTop };
+      if (dy && !usedAxes.has('y')) scroller.scrollTop += dy;
+      if (dx && !usedAxes.has('x')) scroller.scrollLeft += dx;
+      if (scroller.scrollTop !== before.y) usedAxes.add('y');
+      if (scroller.scrollLeft !== before.x) usedAxes.add('x');
+      scrolled ||= scroller.scrollTop !== before.y || scroller.scrollLeft !== before.x;
+    }
+    return scrolled;
+  };
+
   const place = (state: Drag): void => {
     const x = state.pointer.x - state.offset.x;
     const y = state.pointer.y - state.offset.y;
@@ -208,6 +242,8 @@ export function createSortable(options: SortableOptions): Sortable {
     const state = drag;
     if (!state) return;
     place(state);
+    // Scroll first so the target is computed against the rectangles the user now sees.
+    autoScroll(state);
     retarget(state);
     state.frame = requestAnimationFrame(frame);
   };
