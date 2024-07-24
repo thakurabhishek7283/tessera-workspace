@@ -14,6 +14,7 @@ export {
   matchesFilter,
   normalize,
 } from './filter.js';
+export { kanbanPlugin as default, kanbanPlugin } from './plugin.js';
 export { evenRanks, MAX_RANK_LENGTH, rankBetween } from './ranks.js';
 export {
   type Board,
@@ -31,3 +32,4 @@ export {
   TOKEN_COLORS,
   type TokenColor,
 } from './schemas.js';
+export type { BoardController, BoardState, KanbanApi, KanbanRuntime } from './types.js';
