@@ -1,5 +1,4 @@
 import {
-  batch,
   type Command,
   createHistory,
   createStore,
@@ -13,14 +12,13 @@ import { type Collection, createCollection } from '@tessera/storage';
 import { generateNKeysBetween } from 'fractional-indexing';
 import type { z } from 'zod';
 import type { KanbanConfigValue } from './config.js';
-import { EMPTY_FILTER, type KanbanFilter, matchesFilter } from './filter.js';
+import { EMPTY_FILTER, matchesFilter } from './filter.js';
 import { evenRanks, MAX_RANK_LENGTH, rankBetween } from './ranks.js';
 import {
   type Board,
   BoardExportSchema,
   BoardSchema,
   type Card,
-  type CardInput,
   CardSchema,
   type Column,
   ColumnSchema,
@@ -455,6 +453,8 @@ export async function createBoardController(opts: Options): Promise<BoardControl
     boardId,
     state,
     history,
+    getCard: (id) => cards.get(id),
+    getColumn: (id) => columns.get(id),
 
     // ----- columns -----
     async addColumn(title, at) {

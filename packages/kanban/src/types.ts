@@ -41,6 +41,9 @@ export interface BoardController {
   readonly boardId: string;
   readonly state: ReadonlyStore<BoardState>;
   readonly history: History;
+  /** Any card of the board, including ones a filter hides and archived ones. */
+  getCard(id: string): Card | undefined;
+  getColumn(id: string): Column | undefined;
   addColumn(title: string, at?: number): Promise<Column>;
   renameColumn(id: string, title: string): Promise<void>;
   /** `toIndex` counts the other columns, so it is the final position. */
