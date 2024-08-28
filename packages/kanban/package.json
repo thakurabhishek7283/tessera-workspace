@@ -28,6 +28,7 @@
     "README.md"
   ],
   "dependencies": {
+    "@lit/context": "^1.1.0",
     "@tessera/editor": "workspace:*",
     "fractional-indexing": "^4.0.0",
     "lit": "^3.3.0",
@@ -37,10 +38,14 @@
     "@tessera/core": "^0.1.0",
     "@tessera/elements": "^0.1.0",
     "@tessera/storage": "^0.1.0",
-    "react": "^19.0.0"
+    "react": "^19.0.0",
+    "@tessera/react": "^0.1.0"
   },
   "peerDependenciesMeta": {
     "react": {
+      "optional": true
+    },
+    "@tessera/react": {
       "optional": true
     }
   },
@@ -60,6 +65,7 @@
     "@tessera-internal/test-utils": "workspace:*",
     "@tessera/core": "^0.1.0",
     "@tessera/elements": "^0.1.0",
+    "@tessera/react": "^0.1.0",
     "@tessera/storage": "^0.1.0",
     "@tessera/testing": "^0.1.0",
     "@types/node": "^26.6.4",
