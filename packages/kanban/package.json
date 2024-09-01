@@ -61,6 +61,7 @@
   },
   "devDependencies": {
     "@tessera-internal/dnd": "workspace:*",
+    "@tessera-internal/persist": "workspace:*",
     "@tessera-internal/react-wrap": "workspace:*",
     "@tessera-internal/test-utils": "workspace:*",
     "@tessera/core": "^0.1.0",

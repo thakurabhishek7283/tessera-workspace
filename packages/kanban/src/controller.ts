@@ -6,11 +6,10 @@ import {
   type Store,
   type TesseraContext,
   TesseraError,
-  type Unsubscribe,
 } from '@tessera/core';
 import { type Collection, createCollection } from '@tessera/storage';
+import { createPersistence, type Kind } from '@tessera-internal/persist';
 import { generateNKeysBetween } from 'fractional-indexing';
-import type { z } from 'zod';
 import type { KanbanConfigValue } from './config.js';
 import { EMPTY_FILTER, matchesFilter } from './filter.js';
 import { evenRanks, MAX_RANK_LENGTH, rankBetween } from './ranks.js';
@@ -41,17 +40,9 @@ export function createCollections(ctx: TesseraContext): Collections {
   };
 }
 
-interface Kind<T extends { id: string }> {
-  name: 'boards' | 'columns' | 'cards';
-  coll: Collection<T>;
-  schema: z.ZodType<T>;
-  map: Map<string, T>;
-}
-
 const byRank = <T extends { rank: string; id: string }>(a: T, b: T): number =>
   a.rank < b.rank ? -1 : a.rank > b.rank ? 1 : a.id < b.id ? -1 : 1;
 
-const MAX_WRITE_ATTEMPTS = 3;
 const PAGE = 500;
 
 interface Options {
@@ -79,26 +70,17 @@ export async function createBoardController(opts: Options): Promise<BoardControl
   const boards = new Map<string, Board>();
   const columns = new Map<string, Column>();
   const cards = new Map<string, Card>();
-  const versions = new Map<string, number>();
-  const inFlight = new Map<string, number>();
-  let closed = false;
-
+  const persistence = createPersistence({
+    logger: ctx.logger,
+    onChange: () => recompute(),
+    onConflict: (event) => ctx.bus.emit('kanban:conflict', event),
+  });
+  const { commit, insert, remove } = persistence;
   const kinds = {
-    boards: {
-      name: 'boards',
-      coll: collections.boards,
-      schema: BoardSchema,
-      map: boards,
-    } as Kind<Board>,
-    columns: {
-      name: 'columns',
-      coll: collections.columns,
-      schema: ColumnSchema,
-      map: columns,
-    } as Kind<Column>,
-    cards: { name: 'cards', coll: collections.cards, schema: CardSchema, map: cards } as Kind<Card>,
+    boards: persistence.kind(collections.boards, BoardSchema, boards),
+    columns: persistence.kind(collections.columns, ColumnSchema, columns),
+    cards: persistence.kind(collections.cards, CardSchema, cards),
   };
-  const keyOf = (kind: Kind<{ id: string }>, id: string): string => `${kind.name}/${id}`;
   const now = (): string => new Date(ctx.clock.now()).toISOString();
 
   // ---------- derived state ----------
@@ -130,129 +112,6 @@ export async function createBoardController(opts: Options): Promise<BoardControl
     [...cards.values()].filter((c) => c.columnId === columnId && !c.archived).sort(byRank);
 
   // ---------- persistence ----------
-  const bump = (key: string, delta: number): void => {
-    const n = (inFlight.get(key) ?? 0) + delta;
-    if (n <= 0) inFlight.delete(key);
-    else inFlight.set(key, n);
-  };
-
-  /** Fetches the stored copy of a document after a version conflict. */
-  const refetch = async <T extends { id: string }>(
-    kind: Kind<T>,
-    id: string,
-  ): Promise<T | null> => {
-    const doc = await kind.coll.get(id);
-    if (!doc) {
-      versions.delete(keyOf(kind, id));
-      return null;
-    }
-    versions.set(keyOf(kind, id), doc.version);
-    return doc.data;
-  };
-
-  const emitConflict = (
-    kind: Kind<{ id: string }>,
-    id: string,
-    resolution: 'reapplied' | 'reverted' | 'dropped',
-  ): void => {
-    ctx.bus.emit('kanban:conflict', { collection: kind.coll.name, id, resolution });
-  };
-
-  /**
-   * Applies `mutate` to a stored document: optimistically in memory first, then in storage. When
-   * another writer got there first, the stored copy is fetched and `mutate` runs again on it, so
-   * a card moved here while it was renamed elsewhere keeps both changes.
-   */
-  async function commit<T extends { id: string }>(
-    kind: Kind<T>,
-    id: string,
-    mutate: (current: T) => T,
-  ): Promise<T> {
-    const original = kind.map.get(id);
-    if (!original) throw new TesseraError('NOT_FOUND', `${kind.name}/${id} does not exist`);
-    const key = keyOf(kind, id);
-    let base = original;
-    let reapplied = false;
-    for (let attempt = 0; attempt < MAX_WRITE_ATTEMPTS; attempt++) {
-      const next = kind.schema.parse(mutate(base));
-      kind.map.set(id, next);
-      recompute();
-      bump(key, 1);
-      try {
-        const saved = await kind.coll.put({ id, data: next, version: versions.get(key) ?? 0 });
-        versions.set(key, saved.version);
-        if (reapplied) emitConflict(kind, id, 'reapplied');
-        return next;
-      } catch (error) {
-        if (!TesseraError.is(error, 'CONFLICT')) {
-          kind.map.set(id, original);
-          recompute();
-          throw error;
-        }
-        const server = await refetch(kind, id);
-        if (!server) {
-          kind.map.delete(id);
-          recompute();
-          emitConflict(kind, id, 'dropped');
-          throw new TesseraError('NOT_FOUND', `${kind.name}/${id} was deleted by someone else`);
-        }
-        base = server;
-        reapplied = true;
-      } finally {
-        bump(key, -1);
-      }
-    }
-    kind.map.set(id, base);
-    recompute();
-    emitConflict(kind, id, 'reverted');
-    throw new TesseraError('CONFLICT', `${kind.name}/${id} kept changing; the edit was not saved`);
-  }
-
-  async function insert<T extends { id: string }>(kind: Kind<T>, value: T): Promise<T> {
-    const data = kind.schema.parse(value);
-    const key = keyOf(kind, data.id);
-    kind.map.set(data.id, data);
-    recompute();
-    bump(key, 1);
-    try {
-      const saved = await kind.coll.put({ id: data.id, data, version: 0 });
-      versions.set(key, saved.version);
-      return data;
-    } catch (error) {
-      kind.map.delete(data.id);
-      recompute();
-      throw error;
-    } finally {
-      bump(key, -1);
-    }
-  }
-
-  async function remove<T extends { id: string }>(kind: Kind<T>, id: string): Promise<void> {
-    const original = kind.map.get(id);
-    if (!original) return;
-    const key = keyOf(kind, id);
-    kind.map.delete(id);
-    recompute();
-    bump(key, 1);
-    try {
-      try {
-        await kind.coll.delete(id, versions.get(key));
-      } catch (error) {
-        if (!TesseraError.is(error, 'CONFLICT')) throw error;
-        // Someone changed it first; deleting the newer copy is still what the user asked for.
-        await refetch(kind, id);
-        await kind.coll.delete(id, versions.get(key));
-      }
-      versions.delete(key);
-    } catch (error) {
-      kind.map.set(id, original);
-      recompute();
-      throw error;
-    } finally {
-      bump(key, -1);
-    }
-  }
-
   /** Writes `patch` over a stored document; keys set to `undefined` are removed. */
   const patchOf = <T extends object>(current: T, patch: Partial<T>): T => {
     const next = { ...current, ...patch, updatedAt: now() } as Record<string, unknown>;
@@ -360,10 +219,7 @@ export async function createBoardController(opts: Options): Promise<BoardControl
         limit: PAGE,
         ...(cursor ? { cursor } : {}),
       });
-      for (const doc of page.items) {
-        kind.map.set(doc.id, doc.data);
-        versions.set(keyOf(kind, doc.id), doc.version);
-      }
+      for (const doc of page.items) persistence.adopt(kind, doc);
       cursor = page.nextCursor;
     } while (cursor);
   };
@@ -371,8 +227,7 @@ export async function createBoardController(opts: Options): Promise<BoardControl
   try {
     const boardDoc = await collections.boards.get(boardId);
     if (!boardDoc) throw new TesseraError('NOT_FOUND', `Board ${boardId} does not exist`);
-    boards.set(boardId, boardDoc.data);
-    versions.set(keyOf(kinds.boards, boardId), boardDoc.version);
+    persistence.adopt(kinds.boards, boardDoc);
     await Promise.all([loadAll(kinds.columns), loadAll(kinds.cards)]);
     state.set((prev) => ({ ...prev, loading: false, error: null }));
     recompute();
@@ -382,37 +237,10 @@ export async function createBoardController(opts: Options): Promise<BoardControl
   }
 
   // ---------- live sync ----------
-  const stops: Unsubscribe[] = [];
   if (config.sync === 'live') {
-    const follow = <T extends { id: string; boardId?: string }>(kind: Kind<T>): void => {
-      stops.push(
-        kind.coll.watch((change) => {
-          if (closed) return;
-          const key = keyOf(kind, change.id);
-          // Our own writes announce themselves before they resolve; the optimistic copy is current.
-          if (inFlight.has(key)) return;
-          if (!change.deleted && change.version <= (versions.get(key) ?? 0)) return;
-          void (async () => {
-            if (change.deleted) {
-              if (kind.map.delete(change.id)) {
-                versions.delete(key);
-                recompute();
-              }
-              return;
-            }
-            const data = await refetch(kind, change.id);
-            if (closed || !data) return;
-            if (kind.name !== 'boards' && data.boardId !== boardId) return;
-            if (kind.name === 'boards' && change.id !== boardId) return;
-            kind.map.set(change.id, data);
-            recompute();
-          })().catch((error: unknown) => ctx.logger.warn('could not apply a remote change', error));
-        }),
-      );
-    };
-    follow(kinds.boards as Kind<Board>);
-    follow(kinds.columns as Kind<Column>);
-    follow(kinds.cards as Kind<Card>);
+    persistence.follow(kinds.boards, (id) => id === boardId);
+    persistence.follow(kinds.columns, (_id, data) => data.boardId === boardId);
+    persistence.follow(kinds.cards, (_id, data) => data.boardId === boardId);
   }
 
   // ---------- commands ----------
@@ -848,8 +676,7 @@ export async function createBoardController(opts: Options): Promise<BoardControl
     },
 
     close() {
-      closed = true;
-      for (const stop of stops.splice(0)) stop();
+      persistence.close();
       history.clear();
     },
   };

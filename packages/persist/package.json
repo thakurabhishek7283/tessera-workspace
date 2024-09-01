@@ -1,0 +1,28 @@
+{
+  "name": "@tessera-internal/persist",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Internal: optimistic, version-checked writes with conflict re-application and live sync for in-memory entity maps",
+  "license": "MIT",
+  "author": "Abhishek Thakur",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./src/index.ts"
+    }
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@tessera/core": "^0.1.0",
+    "@tessera/storage": "^0.1.0",
+    "zod": "^4.1.0"
+  },
+  "devDependencies": {
+    "@tessera/testing": "^0.1.0",
+    "vitest": "^5.0.0"
+  }
+}
