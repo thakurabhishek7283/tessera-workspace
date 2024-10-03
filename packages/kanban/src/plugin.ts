@@ -1,6 +1,7 @@
 import { definePlugin } from '@tessera/core';
 import { createKanbanApi } from './api.js';
 import { KanbanConfig } from './config.js';
+import { de } from './i18n/de.js';
 import { en } from './i18n/en.js';
 import type { KanbanApi } from './types.js';
 
@@ -20,7 +21,7 @@ export const kanbanPlugin = definePlugin({
   requires: ['storage'],
   // Card descriptions use the editor when it is enabled; a plain text box stands in otherwise.
   optional: ['editor'],
-  messages: { en },
+  messages: { en, de },
   setup(ctx, config): KanbanApi {
     const api = createKanbanApi(ctx, config);
     disposers.set(api, api.dispose);

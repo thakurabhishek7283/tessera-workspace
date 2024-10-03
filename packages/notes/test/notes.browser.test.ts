@@ -231,6 +231,31 @@ describe('config switches', () => {
   });
 });
 
+describe('localisation and theming', () => {
+  it('speaks German when the locale is de', async () => {
+    const { el } = await mount({ locale: 'de', seed: [{ text: 'Eins' }] });
+    expect(toolbar(el).textContent).toContain('Neue Notiz');
+    expect(el.shadowRoot?.querySelector('input[type=search]')?.getAttribute('aria-label')).toBe(
+      'Notizen durchsuchen',
+    );
+  });
+
+  it('is accessible in the dark theme in both layouts', async () => {
+    const { el } = await mount({
+      theme: 'dark',
+      seed: [
+        { text: 'a', color: 'blue' },
+        { text: 'b', color: 'pink' },
+      ],
+    });
+    await expectAccessible(el);
+    await userEvent.click(button(toolbar(el), 'Free layout'));
+    await until(() => el.shadowRoot?.querySelector('.scroller'));
+    await settle(el);
+    await expectAccessible(el);
+  });
+});
+
 describe('free canvas', () => {
   it('positions notes absolutely, drags by the header and resizes from the corner', async () => {
     const { el, data, ids } = await mount({

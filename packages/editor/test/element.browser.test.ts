@@ -329,6 +329,42 @@ describe('<tessera-editor>', () => {
   });
 });
 
+describe('theming and localisation', () => {
+  it('is accessible in the dark theme', async () => {
+    const { instance, root } = await mountInstance(
+      { appId: 'editor-dark', theme: { mode: 'dark' }, features: { editor: { enabled: true } } },
+      plugins,
+    );
+    const host = await fixture(html`<tessera-editor .value=${doc('Dark text')}></tessera-editor>`);
+    root.append(host);
+    const el = host as TesseraEditorElement;
+    el.tessera = instance;
+    await el.editorReady;
+    await el.updateComplete;
+    expect(root.getAttribute('data-tessera-theme')).toBe('dark');
+    await expectAccessible(el);
+  });
+
+  it('speaks German when the locale is de', async () => {
+    const { instance, root } = await mountInstance(
+      { appId: 'editor-de', locale: 'de', features: { editor: { enabled: true } } },
+      plugins,
+    );
+    const host = await fixture(html`<tessera-editor></tessera-editor>`);
+    root.append(host);
+    const el = host as TesseraEditorElement;
+    el.tessera = instance;
+    await el.editorReady;
+    await el.updateComplete;
+    expect(el.shadowRoot?.querySelector('[role=toolbar]')?.getAttribute('aria-label')).toBe(
+      'Formatierung',
+    );
+    expect(el.shadowRoot?.querySelector('.tiptap')?.getAttribute('aria-label')).toBe(
+      'Rich-Text-Editor',
+    );
+  });
+});
+
 describe('<tessera-rich-text>', () => {
   it('renders a document as sanitized HTML without needing an instance', async () => {
     const el = await fixture(

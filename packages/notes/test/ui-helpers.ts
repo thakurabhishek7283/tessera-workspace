@@ -34,6 +34,8 @@ export interface MountOptions {
     color?: 'yellow' | 'pink' | 'blue';
   }>;
   readonly?: boolean;
+  locale?: string;
+  theme?: 'light' | 'dark';
   withEditor?: boolean;
   style?: string;
   board?: string;
@@ -44,6 +46,8 @@ export async function mount(opts: MountOptions = {}): Promise<Mounted> {
   const { instance, root } = await mountInstance(
     {
       appId: 'notes-ui',
+      ...(opts.locale ? { locale: opts.locale } : {}),
+      ...(opts.theme ? { theme: { mode: opts.theme } } : {}),
       features: {
         notes: { enabled: true, ...opts.notes },
         ...(withEditor ? { editor: { enabled: true } } : {}),
@@ -51,6 +55,8 @@ export async function mount(opts: MountOptions = {}): Promise<Mounted> {
     },
     plugins,
   );
+  // The host app paints the page; the kit only sets text colours for the theme.
+  if (opts.theme) root.style.background = 'var(--tessera-color-bg)';
   const api = instance.feature('notes') as NotesApi;
   const data = await api.open(opts.board);
   const ids: Record<string, string> = {};

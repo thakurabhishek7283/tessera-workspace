@@ -31,6 +31,8 @@ export interface MountOptions {
   /** Mount without a board attribute (shows the picker). */
   picker?: boolean;
   readonly?: boolean;
+  locale?: string;
+  theme?: 'light' | 'dark';
   members?: UserInfo[];
   style?: string;
 }
@@ -39,10 +41,14 @@ export async function mount(opts: MountOptions = {}): Promise<Mounted> {
   const { instance, root } = await mountInstance(
     {
       appId: 'kanban-ui',
+      ...(opts.locale ? { locale: opts.locale } : {}),
+      ...(opts.theme ? { theme: { mode: opts.theme } } : {}),
       features: { kanban: { enabled: true, ...opts.kanban }, editor: { enabled: true } },
     },
     plugins,
   );
+  // The host app paints the page; the kit only sets text colours for the theme.
+  if (opts.theme) root.style.background = 'var(--tessera-color-bg)';
   const api = instance.feature('kanban') as KanbanApi;
   // Seeded straight into storage, so tests can switch capabilities off without breaking the setup.
   const { ids, boardId } = await seedStorage(instance, opts.cards ?? {});

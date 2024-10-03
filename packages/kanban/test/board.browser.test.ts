@@ -515,6 +515,33 @@ describe('board picker', () => {
   });
 });
 
+describe('localisation and theming', () => {
+  it('speaks German when the locale is de', async () => {
+    const { el } = await mount({ locale: 'de', cards: { A: ['Eins'] } });
+    expect(column(el, 'A').renderRoot.textContent).toContain('Karte hinzufügen');
+    const filters = must(el.shadowRoot?.querySelector('tessera-kanban-filters'));
+    expect(
+      filters.shadowRoot?.querySelector('input[type=search]')?.getAttribute('aria-label'),
+    ).toBe('Karten durchsuchen');
+    expect(column(el, 'A').renderRoot.querySelector('.count')?.getAttribute('aria-label')).toBe(
+      '1 Karte',
+    );
+  });
+
+  it('is accessible in the dark theme, with a dialog open', async () => {
+    const { el } = await mount({
+      theme: 'dark',
+      cards: { A: ['Dark card'] },
+      members: [{ id: 'u1', name: 'Ada Lovelace' }],
+    });
+    await expectAccessible(el);
+    await userEvent.click(card(el, 'Dark card'));
+    const dialog = await until(() => el.dialog?.open && el.dialog);
+    await settleBoard(el);
+    await expectAccessible(dialog);
+  });
+});
+
 describe('layout', () => {
   it('switches to one column at a time on narrow screens, with a tab bar', async () => {
     const { el } = await mount({ style: 'display:block;width:420px' });
