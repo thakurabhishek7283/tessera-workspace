@@ -9,7 +9,7 @@ import {
   must,
   until,
 } from '@tessera-internal/test-utils';
-import { html } from 'lit';
+import { html, render } from 'lit';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
 import '../src/elements/index.js';
@@ -32,11 +32,11 @@ async function mount(
     { appId: 'editor-el', features: { editor: { enabled: true, ...editor } } },
     plugins,
   );
-  const host = await fixture(template(instance));
-  root.append(host);
-  const el = must(
-    host.matches('tessera-editor') ? host : host.querySelector('tessera-editor'),
-  ) as TesseraEditorElement;
+  // Render inside the root so the element finds its instance on first connect.
+  const container = document.createElement('div');
+  root.append(container);
+  render(template(instance), container);
+  const el = must(container.querySelector('tessera-editor')) as TesseraEditorElement;
   await el.editorReady;
   await el.updateComplete;
   return { el, instance };
@@ -133,6 +133,20 @@ describe('<tessera-editor>', () => {
     expect(none.el.shadowRoot?.querySelector('[role=toolbar]')).toBeNull();
   });
 
+  it('puts the caret at the end when the empty space under the text is clicked', async () => {
+    const { el } = await mount(
+      () => html`<tessera-editor .value=${doc('first')}></tessera-editor>`,
+    );
+    // A click that lands on the editing area itself rather than on a paragraph.
+    q(el, '.tiptap').click();
+    await until(() => (el.shadowRoot as ShadowRoot).activeElement?.classList.contains('tiptap'));
+    await userEvent.keyboard('!');
+    await until(() => q(el, '.tiptap').textContent === 'first!');
+    q(el, '.content').click();
+    await userEvent.keyboard('?');
+    await until(() => q(el, '.tiptap').textContent === 'first!?');
+  });
+
   it('keyboard shortcuts work inside the editing area', async () => {
     const { el } = await mount(() => html`<tessera-editor .value=${doc('x')}></tessera-editor>`);
     await userEvent.click(q(el, '.tiptap'));
@@ -224,6 +238,17 @@ describe('<tessera-editor>', () => {
     await until(() => el.shadowRoot?.querySelector('.tiptap h2'));
   });
 
+  it("keeps the user's edits when the host assigns the same value object again", async () => {
+    const initial = doc('one');
+    const { el } = await mount(() => html`<tessera-editor .value=${initial}></tessera-editor>`);
+    el.editor?.setContent(doc('typed by the user'));
+    await until(() => q(el, '.tiptap').textContent === 'typed by the user');
+    // Lit re-assigns object properties on every host render.
+    el.value = initial;
+    await el.updateComplete;
+    expect(q(el, '.tiptap').textContent).toBe('typed by the user');
+  });
+
   it('fires change (debounced) and input-commit (on blur) events with the value', async () => {
     const { el } = await mount(() => html`<tessera-editor></tessera-editor>`);
     const onChange = vi.fn();
@@ -241,15 +266,19 @@ describe('<tessera-editor>', () => {
   });
 
   it('takes part in forms: JSON value, required, maxlength and reset', async () => {
-    const form = await fixture<HTMLFormElement>(
-      html`<form><tessera-editor name="body" required maxlength="5" .value=${doc('ok')}></tessera-editor></form>`,
-    );
-    const { instance } = await mountInstance(
+    const { instance, root } = await mountInstance(
       { appId: 'editor-form', features: { editor: { enabled: true } } },
       plugins,
     );
+    const container = document.createElement('div');
+    root.append(container);
+    render(
+      html`<form><tessera-editor name="body" required maxlength="5" .value=${doc('ok')}></tessera-editor></form>`,
+      container,
+    );
+    const form = must(container.querySelector('form'));
+    void instance;
     const el = must(form.querySelector<TesseraEditorElement>('tessera-editor'));
-    el.tessera = instance;
     await el.editorReady;
     await el.updateComplete;
 
@@ -335,10 +364,11 @@ describe('theming and localisation', () => {
       { appId: 'editor-dark', theme: { mode: 'dark' }, features: { editor: { enabled: true } } },
       plugins,
     );
-    const host = await fixture(html`<tessera-editor .value=${doc('Dark text')}></tessera-editor>`);
-    root.append(host);
-    const el = host as TesseraEditorElement;
+    // Give the element its instance before it connects, so it never binds to the implicit one.
+    const el = document.createElement('tessera-editor') as TesseraEditorElement;
     el.tessera = instance;
+    el.value = doc('Dark text');
+    root.append(el);
     await el.editorReady;
     await el.updateComplete;
     expect(root.getAttribute('data-tessera-theme')).toBe('dark');
@@ -350,10 +380,9 @@ describe('theming and localisation', () => {
       { appId: 'editor-de', locale: 'de', features: { editor: { enabled: true } } },
       plugins,
     );
-    const host = await fixture(html`<tessera-editor></tessera-editor>`);
-    root.append(host);
-    const el = host as TesseraEditorElement;
+    const el = document.createElement('tessera-editor') as TesseraEditorElement;
     el.tessera = instance;
+    root.append(el);
     await el.editorReady;
     await el.updateComplete;
     expect(el.shadowRoot?.querySelector('[role=toolbar]')?.getAttribute('aria-label')).toBe(

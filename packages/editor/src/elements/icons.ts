@@ -1,7 +1,7 @@
 import { registerIcons } from '@tessera/elements';
 
 // 24×24 stroke icons (same style as the core set). Drawn for this kit.
-registerIcons({
+const ICONS: Record<string, string> = {
   'editor-bold': '<path d="M7 5h6a3.5 3.5 0 0 1 0 7H7zM7 12h7a3.5 3.5 0 0 1 0 7H7z"/>',
   'editor-italic': '<path d="M10 5h8M6 19h8M14.5 5l-5 14"/>',
   'editor-underline': '<path d="M7 4v7a5 5 0 0 0 10 0V4M5 20h14"/>',
@@ -22,4 +22,9 @@ registerIcons({
   'editor-align-center': '<path d="M4 6h16M7 10h10M4 14h16M7 18h10"/>',
   'editor-align-right': '<path d="M4 6h16M10 10h10M4 14h16M10 18h10"/>',
   'editor-clear': '<path d="M5 5h9M9.5 5L8 14M4 20l16-16M12 20h8"/>',
-});
+};
+
+/** Adds the editor's icons to the shared set. A function (not a bare import) so bundlers keep it. */
+export function registerEditorIcons(): void {
+  registerIcons(ICONS);
+}

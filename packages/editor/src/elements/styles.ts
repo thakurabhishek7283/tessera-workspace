@@ -7,6 +7,39 @@ export const proseStyles: CSSResult = css`
     line-height: 1.6;
     overflow-wrap: anywhere;
   }
+  /* What ProseMirror needs to edit text reliably (its own stylesheet cannot reach a shadow root). */
+  .tiptap {
+    position: relative;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-variant-ligatures: none;
+  }
+  .tiptap pre {
+    white-space: pre-wrap;
+  }
+  .tiptap .ProseMirror-gapcursor {
+    display: none;
+    pointer-events: none;
+    position: absolute;
+    margin: 0;
+  }
+  .tiptap .ProseMirror-gapcursor::after {
+    content: '';
+    display: block;
+    position: absolute;
+    top: -2px;
+    width: 20px;
+    border-top: 1px solid var(--tessera-color-text);
+    animation: caret-blink 1.1s steps(2, start) infinite;
+  }
+  .tiptap.ProseMirror-focused .ProseMirror-gapcursor {
+    display: block;
+  }
+  @keyframes caret-blink {
+    to {
+      visibility: hidden;
+    }
+  }
   .tiptap > :first-child,
   .prose > :first-child {
     margin-top: 0;

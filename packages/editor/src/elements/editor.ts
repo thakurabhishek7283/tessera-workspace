@@ -299,6 +299,8 @@ export class TesseraEditorElement extends TesseraElement {
   #resolveReady: ((h: EditorHandle) => void) | undefined;
   /** Last document we produced ourselves, so a `value` echo does not reset the editor. */
   #own: RichDoc | undefined;
+  /** Last `value` the host handed us. Lit re-assigns object properties on every host render. */
+  #applied: RichDoc | string | undefined;
   #initial: RichDoc | string | undefined;
   #valueValue: EditorValue | undefined;
   #offs: Array<() => void> = [];
@@ -387,7 +389,13 @@ export class TesseraEditorElement extends TesseraElement {
     }
     const handle = this.#handle;
     if (!handle) return;
-    if (changed.has('value') && this.value !== undefined && this.value !== this.#own) {
+    if (
+      changed.has('value') &&
+      this.value !== undefined &&
+      this.value !== this.#own &&
+      this.value !== this.#applied
+    ) {
+      this.#applied = this.value;
       handle.setContent(this.value, this.format);
       this.#syncForm();
     }
@@ -423,6 +431,7 @@ export class TesseraEditorElement extends TesseraElement {
     const service: EditorService | undefined = this.ctx.services.get('editor');
     if (!service) return;
     const initial = this.value;
+    this.#applied = initial;
     if (typeof initial === 'object' && initial !== null) {
       const issue = richDocIssue(initial);
       if (issue) {
@@ -560,6 +569,18 @@ export class TesseraEditorElement extends TesseraElement {
       if (input) input.value = '';
     } catch {
       this.linkError = this.t('editor.link.invalid');
+    }
+  };
+
+  /**
+   * Clicking the empty space under the text (or in the padding) should put the caret at the end,
+   * as a native text box does. Inside a shadow root the browser does not do that on its own.
+   */
+  #onContentClick = (event: MouseEvent): void => {
+    if (this.readonly || this.disabled || !this.#handle) return;
+    const target = event.composedPath()[0] as HTMLElement | undefined;
+    if (target?.classList.contains('content') || target?.classList.contains('tiptap')) {
+      this.#handle.focus('end');
     }
   };
 
@@ -789,7 +810,7 @@ export class TesseraEditorElement extends TesseraElement {
     const config = this.#config;
     return html`<div class="frame" part="frame">
       ${state ? this.#renderToolbar(state) : nothing}
-      <div class="content" part="content"></div>
+      <div class="content" part="content" @click=${this.#onContentClick}></div>
       ${
         state?.characters !== undefined && (max !== undefined || config)
           ? html`<footer part="footer" class=${classMap({ over: max !== undefined && characters > max })}>
