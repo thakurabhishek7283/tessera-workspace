@@ -72,6 +72,7 @@ export class TesseraNotesElement extends TesseraElement {
         pointer-events: none;
       }
       input[type='search'] {
+        box-sizing: border-box;
         width: 100%;
         min-height: 36px;
         padding: 0 var(--tessera-space-3) 0 calc(var(--tessera-space-2) + 1.5rem);
@@ -82,6 +83,7 @@ export class TesseraNotesElement extends TesseraElement {
         border-radius: var(--tessera-radius-md);
       }
       select {
+        box-sizing: border-box;
         min-height: 36px;
         font: inherit;
         color: var(--tessera-color-text);

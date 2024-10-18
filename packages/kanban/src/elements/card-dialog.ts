@@ -139,11 +139,19 @@ export class TesseraKanbanCardDialog extends LitElement {
         align-items: center;
       }
       .toggle {
-        all: unset;
         box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font: inherit;
+        color: inherit;
+        background: none;
         cursor: pointer;
         border-radius: var(--tessera-radius-full);
         border: 2px solid transparent;
+      }
+      .toggle.chip {
+        padding: 1px var(--tessera-space-2);
+        background: color-mix(in srgb, var(--c, var(--tessera-color-text-muted)) 16%, var(--tessera-color-bg));
       }
       .toggle[aria-pressed='true'] {
         border-color: var(--tessera-color-text);
