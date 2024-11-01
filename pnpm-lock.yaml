@@ -53,9 +53,18 @@ importers:
       '@tessera/core':
         specifier: link:../../external/tessera/packages/core
         version: link:../../external/tessera/packages/core
+      '@tessera/editor':
+        specifier: workspace:*
+        version: link:../../packages/editor
       '@tessera/elements':
         specifier: link:../../external/tessera/packages/elements
         version: link:../../external/tessera/packages/elements
+      '@tessera/kanban':
+        specifier: workspace:*
+        version: link:../../packages/kanban
+      '@tessera/notes':
+        specifier: workspace:*
+        version: link:../../packages/notes
       '@tessera/storage':
         specifier: link:../../external/tessera/packages/storage
         version: link:../../external/tessera/packages/storage
