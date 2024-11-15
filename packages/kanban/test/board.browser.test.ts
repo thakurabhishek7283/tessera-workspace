@@ -269,6 +269,19 @@ describe('<tessera-kanban>', () => {
     await until(() => data.state.get().columns.some((c) => c.title === 'Backlog'));
   });
 
+  it('saves column settings when Enter is pressed in a field', async () => {
+    const { el, data } = await mount({ cards: { A: ['1'] } });
+    const col = column(el, 'A');
+    await userEvent.click(
+      must(col.renderRoot.querySelector<HTMLElement>('tessera-icon-button[icon=more-horizontal]')),
+    );
+    const dialog = await until(() => col.renderRoot.querySelector('tessera-dialog'));
+    const limit = await until(() => dialog.querySelector<HTMLInputElement>('input[name=limit]'));
+    await userEvent.fill(limit, '3');
+    await userEvent.keyboard('{Enter}');
+    await until(() => data.state.get().columns[0]?.wipLimit === 3);
+  });
+
   it('edits column settings: limit, colour and delete with moving the cards', async () => {
     const { el, data, ids } = await mount({ cards: { A: ['1', '2'] } });
     const col = column(el, 'A');

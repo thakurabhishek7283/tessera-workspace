@@ -398,6 +398,7 @@ export class TesseraKanbanColumn extends LitElement {
       }}
     >
       <form class="settings" @submit=${this.#saveSettings} id=${`${this.#id}-form`}>
+        <button type="submit" hidden aria-hidden="true" tabindex="-1"></button>
         <label>${view.t('kanban.column.title')}
           <input name="title" .value=${column.title} maxlength="60" required ?disabled=${!view.allow.renameColumn} />
         </label>
