@@ -1,0 +1,128 @@
+[
+  {
+    "name": "@tessera/editor \u2014 elements and entry (own code)",
+    "path": ["packages/editor/dist/elements/index.js", "packages/editor/dist/index.js"],
+    "limit": "20 kB",
+    "gzip": true,
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/react",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime",
+      "@tiptap/*",
+      "dompurify",
+      "lowlight",
+      "@tiptap/core",
+      "@tiptap/starter-kit",
+      "@tiptap/extension-character-count",
+      "@tiptap/extension-highlight",
+      "@tiptap/extension-image",
+      "@tiptap/extension-mention",
+      "@tiptap/extension-placeholder",
+      "@tiptap/extension-task-item",
+      "@tiptap/extension-task-list",
+      "@tiptap/extension-text-align",
+      "@tiptap/extension-typography",
+      "@tiptap/markdown",
+      "@tiptap/pm/state",
+      "@tiptap/suggestion",
+      "@tiptap/extension-code-block-lowlight",
+      "@tiptap/extension-table"
+    ]
+  },
+  {
+    "name": "@tessera/editor \u2014 Tiptap engine (lazy, with dependencies; code highlighting and tables are separate)",
+    "path": "packages/editor/dist/engine-*.js",
+    "limit": "170 kB",
+    "ignore": [
+      "@tessera/core",
+      "zod",
+      "lit",
+      "lowlight",
+      "@tiptap/extension-code-block-lowlight",
+      "@tiptap/extension-table"
+    ],
+    "gzip": true
+  },
+  {
+    "name": "@tessera/kanban \u2014 entry + plugin",
+    "path": "packages/kanban/dist/index.js",
+    "limit": "22 kB",
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/react",
+      "@tessera/editor",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime",
+      "fractional-indexing"
+    ],
+    "gzip": true
+  },
+  {
+    "name": "@tessera/kanban \u2014 elements",
+    "path": "packages/kanban/dist/elements/index.js",
+    "limit": "27 kB",
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/react",
+      "@tessera/editor",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime",
+      "fractional-indexing"
+    ],
+    "gzip": true
+  },
+  {
+    "name": "@tessera/notes \u2014 entry + plugin",
+    "path": "packages/notes/dist/index.js",
+    "limit": "15 kB",
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/react",
+      "@tessera/editor",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime",
+      "fractional-indexing"
+    ],
+    "gzip": true
+  },
+  {
+    "name": "@tessera/notes \u2014 elements",
+    "path": "packages/notes/dist/elements/index.js",
+    "limit": "15 kB",
+    "ignore": [
+      "@tessera/core",
+      "@tessera/elements",
+      "@tessera/storage",
+      "@tessera/react",
+      "@tessera/editor",
+      "lit",
+      "@lit/context",
+      "zod",
+      "react",
+      "react/jsx-runtime",
+      "fractional-indexing"
+    ],
+    "gzip": true
+  }
+]
