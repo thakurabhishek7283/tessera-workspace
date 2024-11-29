@@ -19,7 +19,8 @@
     "size": "size-limit",
     "changeset": "changeset",
     "check": "pnpm lint && pnpm typecheck && pnpm test && pnpm build",
-    "screenshots": "node scripts/screenshots.mjs"
+    "screenshots": "node scripts/screenshots.mjs",
+    "docs:config": "node scripts/gen-config-docs.mjs"
   },
   "devDependencies": {
     "@biomejs/biome": "^2.5.0",
