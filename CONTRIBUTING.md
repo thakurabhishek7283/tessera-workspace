@@ -27,7 +27,7 @@ Component and end-to-end tests need Chromium. Install it with `npx playwright in
 ## Conventions
 
 - **Commits** follow Conventional Commits: `feat(kanban): …`, `fix(editor): …`, `docs: …`, `test: …`, `chore: …`. Keep each commit building and passing `pnpm check`.
-- **TypeScript** is strict with `isolatedDeclarations`: exported functions and properties need explicit types. `any` is an error.
+- **TypeScript** is strict, with `noUncheckedIndexedAccess` and `exactOptionalPropertyTypes`. Exported functions and members carry explicit types, and `any` is an error. The base config enables `isolatedDeclarations` but every package opts out ([ADR 4](docs/decisions/0004-isolated-declarations.md)).
 - **Comments** explain *why*, not what. No commented-out code, no `console` in library code (use `ctx.logger`).
 - **Elements** use tokens only (no hard-coded colours), expose `part` names on the main internals and fire kebab-case `CustomEvent`s that bubble and are composed.
 - **Accessibility** is part of done: keyboard operation, visible focus, labelled controls.

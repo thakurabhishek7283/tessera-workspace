@@ -137,4 +137,4 @@ Custom properties: `--tessera-editor-min-height`, `--tessera-editor-max-height`,
 
 ## Security
 
-Pasted and imported HTML goes through DOMPurify with an allow-list of tags and attributes; links are limited to `http`, `https`, `mailto` and `tel`, and images to `http`, `https`, `data:image/…` and `blob:`. `renderStatic` builds its output from the validated document model, never from raw HTML.
+Pasted and imported HTML goes through DOMPurify with an allow-list of tags and attributes; links are limited to the protocols in `link.protocols` (`http`, `https` and `mailto` by default), and images to `http`, `https`, `blob:` and base64 `data:image/` for common raster formats. `renderStatic` builds its output from the validated document model, never from raw HTML.
