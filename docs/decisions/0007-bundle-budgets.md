@@ -19,7 +19,7 @@ The engineering standards set budgets in kB of minified and gzipped code, exclud
 | notes, entry and plugin | 15 kB | 4.8 kB |
 | notes, elements | 15 kB | 12.0 kB |
 
-Two budgets are higher than planned. The editor engine is 167 kB because ProseMirror, `@tiptap/markdown` (with `marked`), DOMPurify and the link detector are each needed for features the editor advertises; it loads on first use only. Kanban's elements are 25.6 kB because the board, column, card, filter bar and card dialog ship together with their styles. Code highlighting (`lowlight`) and tables are separate lazy chunks, switched on by config, and are not counted.
+Two budgets are higher than planned. The editor engine is 167 kB because ProseMirror, `@tiptap/markdown` (with `marked`), DOMPurify and the link detector are each needed for features the editor advertises; it loads on first use only. Kanban's elements are 25.6 kB because the board, column, card, filter bar and card dialog ship together with their styles. Code highlighting (`lowlight`, on by default) and tables (off by default) are separate lazy chunks that load only when the editor is created with them enabled, and are not counted.
 
 ## Consequences
 

@@ -59,7 +59,7 @@ The wrappers render empty tags on the server and attach properties and events af
 import { createTessera } from '@tessera/core';
 
 const tessera = createTessera(
-  { features: { editor: { enabled: true, mentions: true } } },
+  { features: { editor: { enabled: true, mentions: { enabled: true } } } },
   { plugins: { editor: () => import('@tessera/editor') } },
 );
 await tessera.ready;
@@ -109,7 +109,7 @@ Options of the `editor` feature. `{ enabled: true }` alone is valid.
 | `readonly`, `disabled` | Turn editing off |
 | `toolbar` | Comma-separated ids, e.g. `"bold,italic,\|,link"`; overrides the config |
 | `name`, `required`, `maxlength` | Form behaviour; the submitted value is the document as JSON |
-| `mentions` | `{ search(query) }` provider for `@` mentions (needs `mentions: true` in the config) |
+| `mentions` | `{ search(query) }` provider for `@` mentions (needs `mentions.enabled` in the config) |
 
 Setting `value` again with the object the host already passed is ignored, so a framework that re-assigns the same prop on every render does not reset the user's edits. Pass a new object to replace the content.
 
@@ -137,4 +137,4 @@ Custom properties: `--tessera-editor-min-height`, `--tessera-editor-max-height`,
 
 ## Security
 
-Pasted and imported HTML goes through DOMPurify with an allow-list of tags and attributes; links are limited to the protocols in `link.protocols` (`http`, `https` and `mailto` by default), and images to `http`, `https`, `blob:` and base64 `data:image/` for common raster formats. `renderStatic` builds its output from the validated document model, never from raw HTML.
+Pasted and imported HTML goes through DOMPurify with an allow-list of tags and attributes; links are limited to the protocols in `links.protocols` (`http`, `https` and `mailto` by default), and images to `http`, `https`, `blob:` and base64 `data:image/` for common raster formats. `renderStatic` builds its output from the validated document model, never from raw HTML.
