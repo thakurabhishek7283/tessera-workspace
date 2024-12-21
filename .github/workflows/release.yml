@@ -25,6 +25,7 @@ jobs:
           node-version: 22
           cache: pnpm
           registry-url: https://registry.npmjs.org
+      - run: node scripts/fetch-deps.mjs --ci
       - run: pnpm install --frozen-lockfile
       - run: pnpm build
       # Without NPM_TOKEN there is no publish script, so this only opens or updates the
