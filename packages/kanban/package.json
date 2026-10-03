@@ -1,6 +1,6 @@
 {
   "name": "@tessera/kanban",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Kanban board kit for Tessera: a headless board API, a <tessera-kanban> web component and React bindings",
   "license": "MIT",
   "author": "Abhishek Thakur",
