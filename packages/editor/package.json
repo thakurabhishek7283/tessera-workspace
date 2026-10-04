@@ -47,7 +47,7 @@
     "dompurify": "^3.4.0",
     "lit": "^3.3.0",
     "lowlight": "^3.3.0",
-    "zod": "^4.1.0"
+    "zod": "^4.2.0"
   },
   "peerDependencies": {
     "@tessera-kit/core": "^0.1.0",

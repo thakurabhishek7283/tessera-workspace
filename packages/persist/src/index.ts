@@ -1,6 +1,6 @@
 import { type Logger, TesseraError, type Unsubscribe } from '@tessera-kit/core';
 import type { Collection } from '@tessera-kit/storage';
-import type { z } from 'zod';
+import { type core, parse } from 'zod/mini';
 
 export interface Entity {
   id: string;
@@ -10,7 +10,7 @@ export interface Entity {
 export interface Kind<T extends Entity> {
   readonly name: string;
   readonly coll: Collection<T>;
-  readonly schema: z.ZodType<T>;
+  readonly schema: core.$ZodType<T>;
   readonly map: Map<string, T>;
 }
 
@@ -24,7 +24,11 @@ export interface PersistenceOptions {
 }
 
 export interface Persistence {
-  kind<T extends Entity>(coll: Collection<T>, schema: z.ZodType<T>, map?: Map<string, T>): Kind<T>;
+  kind<T extends Entity>(
+    coll: Collection<T>,
+    schema: core.$ZodType<T>,
+    map?: Map<string, T>,
+  ): Kind<T>;
   /** Records a document read from storage, so the next write knows its version. */
   adopt<T extends Entity>(kind: Kind<T>, doc: { id: string; data: T; version: number }): void;
   /**
@@ -84,7 +88,7 @@ export function createPersistence(options: PersistenceOptions): Persistence {
       let base = original;
       let reapplied = false;
       for (let attempt = 0; attempt < MAX_WRITE_ATTEMPTS; attempt++) {
-        const next = kind.schema.parse(mutate(base));
+        const next = parse(kind.schema, mutate(base));
         kind.map.set(id, next);
         options.onChange();
         bump(key, 1);
@@ -122,7 +126,7 @@ export function createPersistence(options: PersistenceOptions): Persistence {
     },
 
     async insert(kind, value) {
-      const data = kind.schema.parse(value);
+      const data = parse(kind.schema, value);
       const key = keyOf(kind, data.id);
       kind.map.set(data.id, data);
       options.onChange();

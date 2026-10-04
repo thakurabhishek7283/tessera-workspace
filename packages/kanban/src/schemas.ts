@@ -1,5 +1,5 @@
 import { RichDocSchema } from '@tessera-kit/editor';
-import { z } from 'zod';
+import * as z from 'zod/mini';
 
 export const TOKEN_COLORS = [
   'gray',
@@ -15,66 +15,66 @@ export const TOKEN_COLORS = [
 export const TokenColorSchema = z.enum(TOKEN_COLORS);
 export type TokenColor = z.infer<typeof TokenColorSchema>;
 
-const Iso = z.string().min(1);
-const IsoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must be a date like 2026-03-07');
+const Iso = z.string().check(z.minLength(1));
+const IsoDate = z.string().check(z.regex(/^\d{4}-\d{2}-\d{2}$/, 'must be a date like 2026-03-07'));
 
 export const LabelSchema = z.object({
-  id: z.string().min(1),
-  name: z.string().min(1).max(40),
+  id: z.string().check(z.minLength(1)),
+  name: z.string().check(z.minLength(1), z.maxLength(40)),
   color: TokenColorSchema,
 });
 export type Label = z.infer<typeof LabelSchema>;
 
 export const ChecklistItemSchema = z.object({
-  id: z.string().min(1),
-  text: z.string().min(1).max(200),
+  id: z.string().check(z.minLength(1)),
+  text: z.string().check(z.minLength(1), z.maxLength(200)),
   done: z.boolean(),
 });
 export type ChecklistItem = z.infer<typeof ChecklistItemSchema>;
 
 export const BoardSchema = z.object({
-  id: z.string().min(1),
-  title: z.string().min(1).max(120),
-  description: RichDocSchema.optional(),
-  labels: z.array(LabelSchema).max(50).default([]),
+  id: z.string().check(z.minLength(1)),
+  title: z.string().check(z.minLength(1), z.maxLength(120)),
+  description: z.optional(RichDocSchema),
+  labels: z._default(z.array(LabelSchema).check(z.maxLength(50)), []),
   createdAt: Iso,
   updatedAt: Iso,
-  archived: z.boolean().optional(),
+  archived: z.optional(z.boolean()),
 });
 export type Board = z.infer<typeof BoardSchema>;
 
 export const ColumnSchema = z.object({
-  id: z.string().min(1),
-  boardId: z.string().min(1),
-  title: z.string().min(1).max(60),
+  id: z.string().check(z.minLength(1)),
+  boardId: z.string().check(z.minLength(1)),
+  title: z.string().check(z.minLength(1), z.maxLength(60)),
   /** Fractional-index key; columns are ordered by it. */
-  rank: z.string().min(1),
-  wipLimit: z.number().int().positive().optional(),
-  color: TokenColorSchema.optional(),
-  collapsed: z.boolean().optional(),
+  rank: z.string().check(z.minLength(1)),
+  wipLimit: z.optional(z.int().check(z.positive())),
+  color: z.optional(TokenColorSchema),
+  collapsed: z.optional(z.boolean()),
 });
 export type Column = z.infer<typeof ColumnSchema>;
 
 export const CardSchema = z.object({
-  id: z.string().min(1),
-  boardId: z.string().min(1),
-  columnId: z.string().min(1),
-  rank: z.string().min(1),
-  title: z.string().min(1).max(200),
-  description: RichDocSchema.optional(),
-  labelIds: z.array(z.string()).max(50).default([]),
-  assigneeIds: z.array(z.string()).max(50).default([]),
-  dueDate: IsoDate.optional(),
-  startDate: IsoDate.optional(),
-  checklist: z.array(ChecklistItemSchema).max(100).default([]),
-  coverColor: TokenColorSchema.optional(),
-  estimate: z.number().nonnegative().optional(),
+  id: z.string().check(z.minLength(1)),
+  boardId: z.string().check(z.minLength(1)),
+  columnId: z.string().check(z.minLength(1)),
+  rank: z.string().check(z.minLength(1)),
+  title: z.string().check(z.minLength(1), z.maxLength(200)),
+  description: z.optional(RichDocSchema),
+  labelIds: z._default(z.array(z.string()).check(z.maxLength(50)), []),
+  assigneeIds: z._default(z.array(z.string()).check(z.maxLength(50)), []),
+  dueDate: z.optional(IsoDate),
+  startDate: z.optional(IsoDate),
+  checklist: z._default(z.array(ChecklistItemSchema).check(z.maxLength(100)), []),
+  coverColor: z.optional(TokenColorSchema),
+  estimate: z.optional(z.number().check(z.nonnegative())),
   /** Fields defined by the host in `config.customFields`. */
-  custom: z.record(z.string(), z.union([z.string(), z.number(), z.boolean()])).optional(),
+  custom: z.optional(z.record(z.string(), z.union([z.string(), z.number(), z.boolean()]))),
   createdAt: Iso,
   updatedAt: Iso,
-  createdBy: z.string().optional(),
-  archived: z.boolean().optional(),
+  createdBy: z.optional(z.string()),
+  archived: z.optional(z.boolean()),
 });
 export type Card = z.infer<typeof CardSchema>;
 

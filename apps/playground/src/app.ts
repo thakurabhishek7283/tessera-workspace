@@ -19,7 +19,7 @@ import {
   nothing,
   type PropertyDeclarations,
 } from 'lit';
-import type { z } from 'zod';
+import type { z } from 'zod/mini';
 import './config-form.js';
 import { MEMBERS, seedAll } from './seed.js';
 
@@ -34,7 +34,7 @@ const TABS: Array<{ id: Tab; label: string }> = [
   { id: 'together', label: 'All together' },
 ];
 
-const FEATURES: Array<{ id: FeatureId; label: string; schema: z.ZodType }> = [
+const FEATURES: Array<{ id: FeatureId; label: string; schema: z.core.$ZodType }> = [
   { id: 'editor', label: 'Editor', schema: EditorConfig },
   { id: 'notes', label: 'Notes', schema: NotesConfig },
   { id: 'kanban', label: 'Kanban', schema: KanbanConfig },
