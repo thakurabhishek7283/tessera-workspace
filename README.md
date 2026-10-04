@@ -154,6 +154,7 @@ pnpm check              # lint, typecheck, unit tests, build
 pnpm test:browser       # component tests in Chromium
 pnpm e2e                # end-to-end tests against the built playground
 pnpm size               # bundle budgets
+pnpm budget             # page budgets, every dependency included
 ```
 
 [CONTRIBUTING.md](CONTRIBUTING.md) has the conventions. The playground has a config form for every feature, a storage selector (memory, localStorage, IndexedDB), a seed button that fills a demo board and notes, and an "Open in new tab" button to watch two tabs stay in sync.

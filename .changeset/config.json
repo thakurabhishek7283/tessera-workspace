@@ -7,5 +7,10 @@
   "access": "public",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["playground", "tessera-workspace-monorepo", "@tessera-internal/dnd"]
+  "ignore": [
+    "@tessera-internal/budgets",
+    "playground",
+    "tessera-workspace-monorepo",
+    "@tessera-internal/dnd"
+  ]
 }
