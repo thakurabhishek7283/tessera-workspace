@@ -1,4 +1,5 @@
 import { ContextConsumer } from '@lit/context';
+import { createSortable, type Sortable } from '@tessera-internal/dnd';
 import type { TesseraInstance, Unsubscribe, UserInfo } from '@tessera-kit/core';
 import {
   baseStyles,
@@ -10,7 +11,6 @@ import {
   toast,
   visuallyHidden,
 } from '@tessera-kit/elements';
-import { createSortable, type Sortable } from '@tessera-internal/dnd';
 import {
   type CSSResultGroup,
   css,

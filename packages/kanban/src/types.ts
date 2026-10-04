@@ -1,4 +1,10 @@
-import type { History, ReadonlyStore, TesseraError, Unsubscribe, UserInfo } from '@tessera-kit/core';
+import type {
+  History,
+  ReadonlyStore,
+  TesseraError,
+  Unsubscribe,
+  UserInfo,
+} from '@tessera-kit/core';
 import type { KanbanConfigValue } from './config.js';
 import type { KanbanFilter } from './filter.js';
 import type { Board, BoardExport, Card, CardInput, Column, Label, TokenColor } from './schemas.js';

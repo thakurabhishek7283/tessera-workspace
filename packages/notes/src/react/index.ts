@@ -1,6 +1,6 @@
+import { wrapElement } from '@tessera-internal/react-wrap';
 import { createStore } from '@tessera-kit/core';
 import { useFeature, useStore } from '@tessera-kit/react';
-import { wrapElement } from '@tessera-internal/react-wrap';
 import { useEffect, useState } from 'react';
 import type { TesseraNotesElement } from '../elements/notes.js';
 import type { Note } from '../schemas.js';

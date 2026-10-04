@@ -1,3 +1,4 @@
+import { createPersistence, type Kind } from '@tessera-internal/persist';
 import {
   type Command,
   createHistory,
@@ -8,7 +9,6 @@ import {
   TesseraError,
 } from '@tessera-kit/core';
 import { type Collection, createCollection } from '@tessera-kit/storage';
-import { createPersistence, type Kind } from '@tessera-internal/persist';
 import { generateNKeysBetween } from 'fractional-indexing';
 import type { KanbanConfigValue } from './config.js';
 import { EMPTY_FILTER, matchesFilter } from './filter.js';
