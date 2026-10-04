@@ -24,6 +24,7 @@ import type { KanbanConfigValue } from '../config.js';
 import { isFilterActive, isoDay } from '../filter.js';
 import type { Board, Card, Column } from '../schemas.js';
 import type { BoardController, KanbanApi } from '../types.js';
+import { version } from '../version.js';
 import type { TesseraKanbanCard } from './card.js';
 import type { TesseraKanbanCardDialog } from './card-dialog.js';
 import type { TesseraKanbanColumn } from './column.js';
@@ -47,6 +48,8 @@ const NARROW = 640;
  * @slot toolbar-end - extra controls at the end of the toolbar
  */
 export class TesseraKanbanElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     board: { attribute: 'board' },
     readonly: { type: Boolean, reflect: true },

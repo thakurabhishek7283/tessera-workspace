@@ -11,6 +11,7 @@ import {
 import { repeat } from 'lit/directives/repeat.js';
 import type { Card, ChecklistItem, Label, TokenColor } from '../schemas.js';
 import { TOKEN_COLORS } from '../schemas.js';
+import { version } from '../version.js';
 import { chipStyles, colorStyles } from './styles.js';
 import type { KanbanView } from './view.js';
 
@@ -28,6 +29,8 @@ let uid = 0;
  * @fires kb-dialog-close
  */
 export class TesseraKanbanCardDialog extends LitElement {
+  static tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     card: { attribute: false },
     columnName: {},

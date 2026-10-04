@@ -1,18 +1,13 @@
-import { defineElement, registerImplicitPlugin } from '@tessera-kit/elements';
-import { TesseraEditorElement } from './editor.js';
-import { registerEditorIcons } from './icons.js';
-import { TesseraRichText } from './rich-text.js';
+// Each tag is defined by its own module (`./tags/<tag>.js`, published as `elements/<tag>`), which
+// also defines the elements it renders. Importing this entry defines the kit's elements.
+import './tags/tessera-editor.js';
+import './tags/tessera-rich-text.js';
+import type { TesseraEditorElement } from './editor.js';
+import type { TesseraRichText } from './rich-text.js';
 
 export { TesseraEditorElement } from './editor.js';
 export { TesseraRichText } from './rich-text.js';
 export { proseStyles } from './styles.js';
-
-// Defining the tags and registering the loader is what lets a bare <tessera-editor> work on the
-// implicit default instance, without any createTessera() call.
-registerEditorIcons();
-defineElement('tessera-editor', TesseraEditorElement);
-defineElement('tessera-rich-text', TesseraRichText);
-registerImplicitPlugin('editor', () => import('../plugin.js'));
 
 declare global {
   interface HTMLElementTagNameMap {

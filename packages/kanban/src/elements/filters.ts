@@ -8,6 +8,7 @@ import {
   type PropertyDeclarations,
 } from 'lit';
 import { isFilterActive, type KanbanFilter } from '../filter.js';
+import { version } from '../version.js';
 import { chipStyles, colorStyles } from './styles.js';
 import type { KanbanView } from './view.js';
 
@@ -18,6 +19,8 @@ import type { KanbanView } from './view.js';
  * @csspart filters
  */
 export class TesseraKanbanFilters extends LitElement {
+  static tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     filter: { attribute: false },
     view: { attribute: false },

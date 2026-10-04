@@ -9,6 +9,7 @@ import {
 } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import type { Card } from '../schemas.js';
+import { version } from '../version.js';
 import { chipStyles, colorStyles } from './styles.js';
 import type { KanbanView } from './view.js';
 
@@ -25,6 +26,8 @@ const parseDay = (iso: string): Date => {
  * @csspart card @csspart title @csspart labels @csspart meta
  */
 export class TesseraKanbanCard extends LitElement {
+  static tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     card: { attribute: false },
     view: { attribute: false },

@@ -20,6 +20,7 @@ import type {
   SlashItem,
   SuggestState,
 } from '../types.js';
+import { version } from '../version.js';
 import { proseStyles } from './styles.js';
 
 const COMMAND_ICON: Record<string, string> = {
@@ -71,6 +72,8 @@ let uid = 0;
  * @csspart toolbar @csspart content @csspart footer @csspart bubble
  */
 export class TesseraEditorElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static formAssociated = true;
   static override properties: PropertyDeclarations = {
     value: { attribute: 'value' },

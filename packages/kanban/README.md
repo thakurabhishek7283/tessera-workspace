@@ -83,6 +83,22 @@ await controller.moveCard(card.id, done.id, 0);
 await controller.history.undo();
 ```
 
+## Entry points
+
+| Import | What it does |
+| --- | --- |
+| `@tessera-kit/kanban/elements` | Defines every kanban element, and the editor elements that show card descriptions. |
+| `@tessera-kit/kanban/elements/<tag>` | Defines one element and the ones it renders, for importing exactly what a page uses: `tessera-kanban`, `tessera-kanban-card`, `tessera-kanban-card-dialog`, `tessera-kanban-column`, `tessera-kanban-filters`. |
+| `@tessera-kit/kanban/autoload` | Only registers the tags (137 B gzip). Each element downloads the first time it appears on the page, which suits plain HTML pages. |
+| `@tessera-kit/kanban` | The headless API and the plugin, without elements. |
+| `@tessera-kit/kanban/react` | React components. |
+
+```html
+<script type="module">
+  import '@tessera-kit/kanban/autoload';
+</script>
+```
+
 ## Configuration
 
 <!-- config:start -->
