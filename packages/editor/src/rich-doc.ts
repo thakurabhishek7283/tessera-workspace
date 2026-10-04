@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import * as z from 'zod/mini';
 
 /** One ProseMirror/Tiptap node in its JSON form. */
 export interface RichNode {
@@ -54,7 +54,7 @@ export function richDocIssue(value: unknown): string | null {
 }
 
 /** Structural check: a `doc` node, at most {@link MAX_DEPTH} levels deep and {@link MAX_BYTES} long. */
-export const RichDocSchema: z.ZodType<RichDoc> = z.custom<RichDoc>(
+export const RichDocSchema: z.ZodMiniType<RichDoc> = z.custom<RichDoc>(
   (value) => richDocIssue(value) === null,
   'must be a rich text document (a "doc" node, at most 20 levels deep and 64 KB)',
 );

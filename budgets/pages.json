@@ -1,18 +1,18 @@
 {
   "editor-page": {
-    "initialGzip": 65600,
-    "totalGzip": 575500
+    "initialGzip": 46800,
+    "totalGzip": 556700
   },
   "kanban+notes-page": {
-    "initialGzip": 89900,
-    "totalGzip": 614300
+    "initialGzip": 71200,
+    "totalGzip": 595700
   },
   "kanban-page": {
-    "initialGzip": 83900,
-    "totalGzip": 603400
+    "initialGzip": 65200,
+    "totalGzip": 584800
   },
   "notes-page": {
-    "initialGzip": 73500,
-    "totalGzip": 588200
+    "initialGzip": 54800,
+    "totalGzip": 569600
   }
 }

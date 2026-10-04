@@ -26,7 +26,7 @@ Kits never import each other except through `@tessera-kit/editor`, which notes a
 
 Each kit has the same shape, which is the one the `tessera` core expects of a plugin.
 
-1. **Schemas** (`schemas.ts`, `config.ts`): zod definitions of the stored documents and of the feature options. The config schema is the single source for the README tables (`scripts/gen-config-docs.mjs`) and for the playground's config form.
+1. **Schemas** (`schemas.ts`, `config.ts`): zod/mini definitions of the stored documents and of the feature options. The config schema is the single source for the README tables (`scripts/gen-config-docs.mjs`) and for the playground's config form.
 2. **Controller** (`controller.ts`): holds the state in a store, applies every change as a *command* with `do`, `undo` and an optional `merge`, saves through `persist`, and emits bus events. It knows nothing about the DOM, so the node tests cover almost all behaviour.
 3. **Plugin and API** (`plugin.ts`, `api.ts`): `definePlugin` registers the feature, validates the options and exposes the API (`open(boardId)` returns a controller). Messages for `en` and `de` are merged into the instance's i18n.
 4. **Elements** (`elements/`): the public element extends `TesseraElement`, finds the instance and controller, and renders with Lit. Inner elements (`tessera-kanban-column`, `-card`, `-card-dialog`, `-filters`, `tessera-note`) are plain Lit elements that receive a `view` object (the translate function, the capability flags, the readonly flag), so they have no instance lookup of their own.
