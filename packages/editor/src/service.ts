@@ -1,4 +1,4 @@
-import type { TesseraContext } from '@tessera/core';
+import type { TesseraContext } from '@tessera-kit/core';
 import type { EditorConfigValue } from './config.js';
 import { renderStatic } from './render.js';
 import { toPlainText } from './rich-doc.js';

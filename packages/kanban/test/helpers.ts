@@ -1,5 +1,5 @@
-import type { TesseraEvents } from '@tessera/core';
-import { createTestInstance, type TestInstance } from '@tessera/testing';
+import type { TesseraEvents } from '@tessera-kit/core';
+import { createTestInstance, type TestInstance } from '@tessera-kit/testing';
 import type { BoardController, Card, KanbanApi } from '../src/index.js';
 
 export interface Env extends TestInstance {

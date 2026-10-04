@@ -1,4 +1,4 @@
-import { baseStyles, TesseraElement } from '@tessera/elements';
+import { baseStyles, TesseraElement } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, type PropertyDeclarations } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { renderStatic } from '../render.js';

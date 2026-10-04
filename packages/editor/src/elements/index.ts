@@ -1,4 +1,4 @@
-import { defineElement, registerImplicitPlugin } from '@tessera/elements';
+import { defineElement, registerImplicitPlugin } from '@tessera-kit/elements';
 import { TesseraEditorElement } from './editor.js';
 import { registerEditorIcons } from './icons.js';
 import { TesseraRichText } from './rich-text.js';

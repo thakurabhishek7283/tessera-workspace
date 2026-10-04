@@ -1,4 +1,4 @@
-import { createTestInstance, type TestInstance } from '@tessera/testing';
+import { createTestInstance, type TestInstance } from '@tessera-kit/testing';
 import type { Note, NotesApi, NotesController } from '../src/index.js';
 
 export interface Env extends TestInstance {

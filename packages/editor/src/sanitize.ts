@@ -1,4 +1,4 @@
-import { TesseraError } from '@tessera/core';
+import { TesseraError } from '@tessera-kit/core';
 import DOMPurify from 'dompurify';
 
 // Mirrors the nodes and marks the editor can produce; anything else is dropped.

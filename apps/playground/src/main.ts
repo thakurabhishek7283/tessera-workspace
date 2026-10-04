@@ -1,5 +1,5 @@
-import '@tessera/elements/define';
-import '@tessera/editor/elements';
-import '@tessera/notes/elements';
-import '@tessera/kanban/elements';
+import '@tessera-kit/elements/define';
+import '@tessera-kit/editor/elements';
+import '@tessera-kit/notes/elements';
+import '@tessera-kit/kanban/elements';
 import './app.js';

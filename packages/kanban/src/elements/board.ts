@@ -1,5 +1,5 @@
 import { ContextConsumer } from '@lit/context';
-import type { TesseraInstance, Unsubscribe, UserInfo } from '@tessera/core';
+import type { TesseraInstance, Unsubscribe, UserInfo } from '@tessera-kit/core';
 import {
   baseStyles,
   focusRing,
@@ -9,7 +9,7 @@ import {
   tesseraContext,
   toast,
   visuallyHidden,
-} from '@tessera/elements';
+} from '@tessera-kit/elements';
 import { createSortable, type Sortable } from '@tessera-internal/dnd';
 import {
   type CSSResultGroup,

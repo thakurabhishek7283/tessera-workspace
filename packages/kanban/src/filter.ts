@@ -1,4 +1,4 @@
-import { toPlainText } from '@tessera/editor';
+import { toPlainText } from '@tessera-kit/editor';
 import type { Card } from './schemas.js';
 
 export interface KanbanFilter {

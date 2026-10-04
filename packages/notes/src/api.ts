@@ -1,4 +1,4 @@
-import type { TesseraContext } from '@tessera/core';
+import type { TesseraContext } from '@tessera-kit/core';
 import type { NotesConfigValue } from './config.js';
 import { createNotesCollection, createNotesController } from './controller.js';
 import type { NotesApi, NotesController } from './types.js';

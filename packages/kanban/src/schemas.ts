@@ -1,4 +1,4 @@
-import { RichDocSchema } from '@tessera/editor';
+import { RichDocSchema } from '@tessera-kit/editor';
 import { z } from 'zod';
 
 export const TOKEN_COLORS = [

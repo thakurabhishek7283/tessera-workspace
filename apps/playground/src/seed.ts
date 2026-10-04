@@ -1,7 +1,7 @@
-import type { TesseraInstance } from '@tessera/core';
-import type { RichDoc, RichNode } from '@tessera/editor';
-import type { KanbanApi } from '@tessera/kanban';
-import type { NotesApi } from '@tessera/notes';
+import type { TesseraInstance } from '@tessera-kit/core';
+import type { RichDoc, RichNode } from '@tessera-kit/editor';
+import type { KanbanApi } from '@tessera-kit/kanban';
+import type { NotesApi } from '@tessera-kit/notes';
 
 export const MEMBERS = [
   { id: 'ada', name: 'Ada Lovelace' },

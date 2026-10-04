@@ -1,5 +1,5 @@
-import { type Logger, TesseraError, type Unsubscribe } from '@tessera/core';
-import type { Collection } from '@tessera/storage';
+import { type Logger, TesseraError, type Unsubscribe } from '@tessera-kit/core';
+import type { Collection } from '@tessera-kit/storage';
 import type { z } from 'zod';
 
 export interface Entity {

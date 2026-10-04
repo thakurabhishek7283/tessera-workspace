@@ -1,4 +1,4 @@
-import type { ReadonlyStore, UploadResult } from '@tessera/core';
+import type { ReadonlyStore, UploadResult } from '@tessera-kit/core';
 import type { ToolbarItem } from './config.js';
 import type { RichDoc } from './rich-doc.js';
 
@@ -143,7 +143,7 @@ export interface EditorService {
   toPlainText(doc: RichDoc): string;
 }
 
-declare module '@tessera/core' {
+declare module '@tessera-kit/core' {
   interface FeatureApiMap {
     editor: EditorService;
   }

@@ -1,4 +1,4 @@
-import { RichDocSchema } from '@tessera/editor';
+import { RichDocSchema } from '@tessera-kit/editor';
 import { z } from 'zod';
 
 export const NOTE_COLORS = ['yellow', 'pink', 'blue', 'green', 'purple', 'orange', 'gray'] as const;

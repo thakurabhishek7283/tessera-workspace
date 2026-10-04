@@ -1,4 +1,4 @@
-import { baseStyles, focusRing, visuallyHidden } from '@tessera/elements';
+import { baseStyles, focusRing, visuallyHidden } from '@tessera-kit/elements';
 import {
   type CSSResultGroup,
   css,

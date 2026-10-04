@@ -1,10 +1,10 @@
-# @tessera/kanban
+# @tessera-kit/kanban
 
 A Kanban board for the [Tessera](https://github.com/thakurabhishek7283/tessera) kit family: boards, columns, cards with rich descriptions, labels, assignees, due dates and checklists, with drag and drop that works with a mouse, a finger and the keyboard.
 
 - Drag and drop by pointer, touch or keyboard (Space to lift, arrows to move, Space to drop), with live announcements for screen readers
 - WIP limits per column, enforced in the UI and in the controller
-- Card dialog with a rich description ([`@tessera/editor`](../editor/README.md)), labels, assignees, due date and checklist
+- Card dialog with a rich description ([`@tessera-kit/editor`](../editor/README.md)), labels, assignees, due date and checklist
 - Search and filters (text, label, assignee, due this week or overdue)
 - Undo and redo for every change, including moves, deletes and edits
 - Capability switches: turn off creating, moving, renaming or deleting without touching the UI code
@@ -16,10 +16,10 @@ A Kanban board for the [Tessera](https://github.com/thakurabhishek7283/tessera) 
 ## Install
 
 ```sh
-pnpm add @tessera/kanban @tessera/editor @tessera/core @tessera/elements
+pnpm add @tessera-kit/kanban @tessera-kit/editor @tessera-kit/core @tessera-kit/elements
 ```
 
-`@tessera/storage` is optional: without it the implicit default instance keeps data in the browser. The packages are not published to npm yet; see the [repository README](../../README.md) for building from source.
+`@tessera-kit/storage` is optional: without it the implicit default instance keeps data in the browser. The packages are not published to npm yet; see the [repository README](../../README.md) for building from source.
 
 ## Use
 
@@ -27,7 +27,7 @@ pnpm add @tessera/kanban @tessera/editor @tessera/core @tessera/elements
 
 ```html
 <script type="module">
-  import '@tessera/kanban/elements';
+  import '@tessera-kit/kanban/elements';
 </script>
 
 <tessera-kanban></tessera-kanban>
@@ -46,7 +46,7 @@ board.addEventListener('card-move', (e) => {
 ### React
 
 ```tsx
-import { Kanban, useKanbanBoard } from '@tessera/kanban/react';
+import { Kanban, useKanbanBoard } from '@tessera-kit/kanban/react';
 
 <Kanban
   board={boardId}
@@ -59,14 +59,14 @@ import { Kanban, useKanbanBoard } from '@tessera/kanban/react';
 ### With other kits
 
 ```ts
-import { createTessera } from '@tessera/core';
+import { createTessera } from '@tessera-kit/core';
 
 const tessera = createTessera(
   {
     storage: { type: 'indexeddb' },
     features: { editor: { enabled: true }, kanban: { enabled: true, wipLimits: true } },
   },
-  { plugins: { editor: () => import('@tessera/editor'), kanban: () => import('@tessera/kanban') } },
+  { plugins: { editor: () => import('@tessera-kit/editor'), kanban: () => import('@tessera-kit/kanban') } },
 );
 tessera.on('kanban:card-moved', ({ card, toColumnId }) => console.log(card.title, '→', toColumnId));
 ```

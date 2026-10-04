@@ -5,9 +5,9 @@ import {
   type Store,
   type TesseraContext,
   TesseraError,
-} from '@tessera/core';
-import { toPlainText } from '@tessera/editor';
-import { type Collection, createCollection } from '@tessera/storage';
+} from '@tessera-kit/core';
+import { toPlainText } from '@tessera-kit/editor';
+import { type Collection, createCollection } from '@tessera-kit/storage';
 import { createPersistence } from '@tessera-internal/persist';
 import type { NotesConfigValue } from './config.js';
 import {

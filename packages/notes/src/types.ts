@@ -1,4 +1,4 @@
-import type { History, ReadonlyStore } from '@tessera/core';
+import type { History, ReadonlyStore } from '@tessera-kit/core';
 import type { NotesConfigValue } from './config.js';
 import type { Note, NoteColor, NotesExport } from './schemas.js';
 
@@ -53,7 +53,7 @@ export interface NotesController {
   close(): void;
 }
 
-declare module '@tessera/core' {
+declare module '@tessera-kit/core' {
   interface FeatureApiMap {
     notes: NotesApi;
   }

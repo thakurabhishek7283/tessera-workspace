@@ -1,4 +1,4 @@
-import { TesseraError } from '@tessera/core';
+import { TesseraError } from '@tessera-kit/core';
 import { describe, expect, it, vi } from 'vitest';
 import { makeEnv, seed, titles } from './helpers.js';
 

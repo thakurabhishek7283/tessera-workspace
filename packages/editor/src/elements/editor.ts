@@ -1,5 +1,5 @@
-import { type ReadonlyStore, TesseraError } from '@tessera/core';
-import { baseStyles, focusRing, TesseraElement, toast } from '@tessera/elements';
+import { type ReadonlyStore, TesseraError } from '@tessera-kit/core';
+import { baseStyles, focusRing, TesseraElement, toast } from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { classMap } from 'lit/directives/class-map.js';
 import {

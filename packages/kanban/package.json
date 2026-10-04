@@ -1,5 +1,5 @@
 {
-  "name": "@tessera/kanban",
+  "name": "@tessera-kit/kanban",
   "version": "0.1.0",
   "description": "Kanban board kit for Tessera: a headless board API, a <tessera-kanban> web component and React bindings",
   "license": "MIT",
@@ -29,23 +29,23 @@
   ],
   "dependencies": {
     "@lit/context": "^1.1.0",
-    "@tessera/editor": "workspace:*",
+    "@tessera-kit/editor": "workspace:*",
     "fractional-indexing": "^4.0.0",
     "lit": "^3.3.0",
     "zod": "^4.1.0"
   },
   "peerDependencies": {
-    "@tessera/core": "^0.1.0",
-    "@tessera/elements": "^0.1.0",
-    "@tessera/storage": "^0.1.0",
+    "@tessera-kit/core": "^0.1.0",
+    "@tessera-kit/elements": "^0.1.0",
+    "@tessera-kit/storage": "^0.1.0",
     "react": "^19.0.0",
-    "@tessera/react": "^0.1.0"
+    "@tessera-kit/react": "^0.1.0"
   },
   "peerDependenciesMeta": {
     "react": {
       "optional": true
     },
-    "@tessera/react": {
+    "@tessera-kit/react": {
       "optional": true
     }
   },
@@ -64,11 +64,11 @@
     "@tessera-internal/persist": "workspace:*",
     "@tessera-internal/react-wrap": "workspace:*",
     "@tessera-internal/test-utils": "workspace:*",
-    "@tessera/core": "^0.1.0",
-    "@tessera/elements": "^0.1.0",
-    "@tessera/react": "^0.1.0",
-    "@tessera/storage": "^0.1.0",
-    "@tessera/testing": "^0.1.0",
+    "@tessera-kit/core": "^0.1.0",
+    "@tessera-kit/elements": "^0.1.0",
+    "@tessera-kit/react": "^0.1.0",
+    "@tessera-kit/storage": "^0.1.0",
+    "@tessera-kit/testing": "^0.1.0",
     "@types/node": "^26.6.4",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",

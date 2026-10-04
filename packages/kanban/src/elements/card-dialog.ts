@@ -1,5 +1,5 @@
-import { isRichDocEmpty, type RichDoc, richDocFromText, toPlainText } from '@tessera/editor';
-import { baseStyles, focusRing, visuallyHidden } from '@tessera/elements';
+import { isRichDocEmpty, type RichDoc, richDocFromText, toPlainText } from '@tessera-kit/editor';
+import { baseStyles, focusRing, visuallyHidden } from '@tessera-kit/elements';
 import {
   type CSSResultGroup,
   css,

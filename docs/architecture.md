@@ -5,11 +5,11 @@ This page is for people changing the code. The user-facing view is in the [packa
 ## Packages
 
 ```text
-                 @tessera/core   @tessera/elements   @tessera/storage   (peers, from the tessera repo)
+                 @tessera-kit/core   @tessera-kit/elements   @tessera-kit/storage   (peers, from the tessera repo)
                       ▲                 ▲                    ▲
         ┌─────────────┴────────┬────────┴─────────┬──────────┘
         │                      │                  │
- @tessera/editor ◀──── @tessera/notes       @tessera/kanban
+ @tessera-kit/editor ◀──── @tessera-kit/notes       @tessera-kit/kanban
         ▲                                         │
         └─────────────────────────────────────────┘
 
@@ -20,7 +20,7 @@ This page is for people changing the code. The user-facing view is in the [packa
    @tessera-internal/test-utils fixtures, axe helper, instance mounting (tests only)
 ```
 
-Kits never import each other except through `@tessera/editor`, which notes and kanban use for their text fields. Everything else a kit needs from the outside comes through the instance: storage, uploads, the bus, i18n and the user.
+Kits never import each other except through `@tessera-kit/editor`, which notes and kanban use for their text fields. Everything else a kit needs from the outside comes through the instance: storage, uploads, the bus, i18n and the user.
 
 ## One kit, four layers
 
@@ -74,7 +74,7 @@ Keyboard dragging follows the pattern Space (lift), arrows (move), Space (drop),
 
 ## Editor
 
-`@tessera/editor` is split so that nothing heavy loads until it is needed:
+`@tessera-kit/editor` is split so that nothing heavy loads until it is needed:
 
 - `service.ts` is the plugin's API. `renderStatic` and `toPlainText` are synchronous and need no Tiptap.
 - `create()` dynamically imports `engine/`, which builds the Tiptap editor from the feature config. Code highlighting and tables are separate dynamic imports that only run when switched on.
@@ -93,4 +93,4 @@ Keyboard dragging follows the pattern Space (lift), arrows (move), Space (drop),
 
 ## Build and dependencies
 
-`pnpm deps` puts the `tessera` repository at `external/tessera` and builds it; the root `pnpm.overrides` link the `@tessera/*` peers to it ([ADR 1](decisions/0001-cross-repo-dependencies.md)). Each package builds with `tsdown`, which bundles the private `@tessera-internal/*` packages and leaves real dependencies external ([ADR 2](decisions/0002-internal-packages-are-bundled.md)). Turborepo orders the builds and caches them.
+`pnpm deps` puts the `tessera` repository at `external/tessera` and builds it; the root `pnpm.overrides` link the `@tessera-kit/*` peers to it ([ADR 1](decisions/0001-cross-repo-dependencies.md)). Each package builds with `tsdown`, which bundles the private `@tessera-internal/*` packages and leaves real dependencies external ([ADR 2](decisions/0002-internal-packages-are-bundled.md)). Turborepo orders the builds and caches them.

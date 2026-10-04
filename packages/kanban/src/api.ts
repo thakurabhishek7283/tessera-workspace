@@ -1,4 +1,4 @@
-import { createStore, type TesseraContext, TesseraError } from '@tessera/core';
+import { createStore, type TesseraContext, TesseraError } from '@tessera-kit/core';
 import type { KanbanConfigValue } from './config.js';
 import { type Collections, createBoardController, createCollections } from './controller.js';
 import { evenRanks } from './ranks.js';

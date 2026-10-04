@@ -1,4 +1,4 @@
-import { createStore, type Store } from '@tessera/core';
+import { createStore, type Store } from '@tessera-kit/core';
 import type { Editor } from '@tiptap/core';
 import type { PluginKey } from '@tiptap/pm/state';
 import { exitSuggestion, type SuggestionOptions } from '@tiptap/suggestion';

@@ -1,4 +1,4 @@
-import { ToolbarItemSchema } from '@tessera/editor';
+import { ToolbarItemSchema } from '@tessera-kit/editor';
 import { z } from 'zod';
 import { NOTE_COLORS, NoteColorSchema } from './schemas.js';
 

@@ -1,4 +1,4 @@
-import { createStore, type TesseraContext, TesseraError } from '@tessera/core';
+import { createStore, type TesseraContext, TesseraError } from '@tessera-kit/core';
 import { type AnyExtension, Editor, Extension } from '@tiptap/core';
 import { CharacterCount } from '@tiptap/extension-character-count';
 import { Highlight } from '@tiptap/extension-highlight';

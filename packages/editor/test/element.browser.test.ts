@@ -1,5 +1,5 @@
-import type { TesseraInstance } from '@tessera/core';
-import '@tessera/elements/define';
+import type { TesseraInstance } from '@tessera-kit/core';
+import '@tessera-kit/elements/define';
 import {
   cleanup,
   deepQuery,

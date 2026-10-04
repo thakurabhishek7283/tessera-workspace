@@ -1,4 +1,4 @@
-import { definePlugin } from '@tessera/core';
+import { definePlugin } from '@tessera-kit/core';
 import { createKanbanApi } from './api.js';
 import { KanbanConfig } from './config.js';
 import { de } from './i18n/de.js';
@@ -12,7 +12,7 @@ const disposers = new WeakMap<KanbanApi, () => void>();
  * so the same code runs on memory, IndexedDB or a REST backend.
  *
  * @example
- * createTessera(cfg, { plugins: { kanban: () => import('@tessera/kanban') } });
+ * createTessera(cfg, { plugins: { kanban: () => import('@tessera-kit/kanban') } });
  */
 export const kanbanPlugin = definePlugin({
   id: 'kanban',

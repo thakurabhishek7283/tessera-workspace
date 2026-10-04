@@ -18,9 +18,9 @@ Task boards, notes and rich text are in almost every collaborative app, and each
 
 | Package | What it gives you | More |
 | --- | --- | --- |
-| [`@tessera/editor`](packages/editor) | `<tessera-editor>`: toolbar, bubble menu, `/` menu, Markdown shortcuts, images, HTML and Markdown import and export, form support; `<tessera-rich-text>` for read-only display | [README](packages/editor/README.md) |
-| [`@tessera/notes`](packages/notes) | `<tessera-notes>`: sticky notes on a grid or a free canvas, with search, tags, pinning, colours and archive | [README](packages/notes/README.md) |
-| [`@tessera/kanban`](packages/kanban) | `<tessera-kanban>`: boards, columns, cards, WIP limits, labels, assignees, due dates, checklists, filters, undo and redo | [README](packages/kanban/README.md) |
+| [`@tessera-kit/editor`](packages/editor) | `<tessera-editor>`: toolbar, bubble menu, `/` menu, Markdown shortcuts, images, HTML and Markdown import and export, form support; `<tessera-rich-text>` for read-only display | [README](packages/editor/README.md) |
+| [`@tessera-kit/notes`](packages/notes) | `<tessera-notes>`: sticky notes on a grid or a free canvas, with search, tags, pinning, colours and archive | [README](packages/notes/README.md) |
+| [`@tessera-kit/kanban`](packages/kanban) | `<tessera-kanban>`: boards, columns, cards, WIP limits, labels, assignees, due dates, checklists, filters, undo and redo | [README](packages/kanban/README.md) |
 
 Every package also has a headless API and a `/react` entry. The private packages `@tessera-internal/dnd`, `persist`, `react-wrap` and `test-utils` are bundled into the kits ([ADR 2](docs/decisions/0002-internal-packages-are-bundled.md)).
 
@@ -40,7 +40,7 @@ The packages are not on npm yet, so build them from source first (see [Developme
 
 ```html
 <script type="module">
-  import '@tessera/kanban/elements';
+  import '@tessera-kit/kanban/elements';
 </script>
 
 <tessera-kanban></tessera-kanban>
@@ -51,9 +51,9 @@ That is the whole setup. A bare element runs on Tessera's implicit default insta
 ### React
 
 ```tsx
-import { Kanban } from '@tessera/kanban/react';
-import { Notes } from '@tessera/notes/react';
-import { Editor } from '@tessera/editor/react';
+import { Kanban } from '@tessera-kit/kanban/react';
+import { Notes } from '@tessera-kit/notes/react';
+import { Editor } from '@tessera-kit/editor/react';
 
 export function Workspace({ boardId }: { boardId: string }) {
   return (
@@ -71,7 +71,7 @@ The wrappers render empty tags on the server and attach properties and events af
 ### With other Tessera kits
 
 ```ts
-import { createTessera } from '@tessera/core';
+import { createTessera } from '@tessera-kit/core';
 
 const tessera = createTessera(
   {
@@ -84,9 +84,9 @@ const tessera = createTessera(
   },
   {
     plugins: {
-      editor: () => import('@tessera/editor'),
-      kanban: () => import('@tessera/kanban'),
-      notes: () => import('@tessera/notes'),
+      editor: () => import('@tessera-kit/editor'),
+      kanban: () => import('@tessera-kit/kanban'),
+      notes: () => import('@tessera-kit/notes'),
     },
   },
 );
@@ -137,7 +137,7 @@ DOM events bubble and are composed; bus events go through `instance.on(...)`.
         │                 │                 │
         └──── persist ────┘            lazy Tiptap engine   optimistic, version-checked writes
                  │
-      @tessera/storage (memory · localStorage · IndexedDB · REST)       from the tessera repo
+      @tessera-kit/storage (memory · localStorage · IndexedDB · REST)       from the tessera repo
 ```
 
 Every kit has schemas, a controller that knows nothing about the DOM, a plugin that registers it with the core, and elements that render it. Cards and notes keep their order as fractional-index ranks, so a move writes one document and two people moving different cards never conflict. See [docs/architecture.md](docs/architecture.md) and the [decision records](docs/decisions).

@@ -1,5 +1,5 @@
-import { createStore, type TesseraError, type UserInfo } from '@tessera/core';
-import { useFeature, useStore } from '@tessera/react';
+import { createStore, type TesseraError, type UserInfo } from '@tessera-kit/core';
+import { useFeature, useStore } from '@tessera-kit/react';
 import { wrapElement } from '@tessera-internal/react-wrap';
 import { useEffect, useState } from 'react';
 import type { TesseraKanbanElement } from '../elements/board.js';

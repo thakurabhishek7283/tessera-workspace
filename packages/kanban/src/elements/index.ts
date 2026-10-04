@@ -1,5 +1,5 @@
-import { defineElement, registerImplicitPlugin } from '@tessera/elements';
-import '@tessera/editor/elements';
+import { defineElement, registerImplicitPlugin } from '@tessera-kit/elements';
+import '@tessera-kit/editor/elements';
 import { TesseraKanbanElement } from './board.js';
 import { TesseraKanbanCard } from './card.js';
 import { TesseraKanbanCardDialog } from './card-dialog.js';

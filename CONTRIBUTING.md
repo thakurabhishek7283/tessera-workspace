@@ -19,7 +19,7 @@ Component and end-to-end tests need Chromium. Install it with `npx playwright in
 | Task | Command |
 | --- | --- |
 | Run the playground | `pnpm dev` |
-| Unit tests | `pnpm test` (add `--filter @tessera/kanban` to narrow) |
+| Unit tests | `pnpm test` (add `--filter @tessera-kit/kanban` to narrow) |
 | Component tests in a browser | `pnpm test:browser` |
 | End-to-end tests | `pnpm e2e` |
 | Format | `pnpm format` |

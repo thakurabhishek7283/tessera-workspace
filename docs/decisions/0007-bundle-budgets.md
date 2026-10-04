@@ -8,7 +8,7 @@ The engineering standards set budgets in kB of minified and gzipped code, exclud
 
 ## Decision
 
-`pnpm size` (size-limit, run in CI) measures each package's built output with its own third-party dependencies and without the peers (`@tessera/*`, `lit`, `zod`, `react`). Results at the time of writing:
+`pnpm size` (size-limit, run in CI) measures each package's built output with its own third-party dependencies and without the peers (`@tessera-kit/*`, `lit`, `zod`, `react`). Results at the time of writing:
 
 | Entry | Budget | Measured |
 | --- | --- | --- |

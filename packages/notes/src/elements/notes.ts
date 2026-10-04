@@ -1,5 +1,5 @@
 import { ContextConsumer } from '@lit/context';
-import type { TesseraInstance } from '@tessera/core';
+import type { TesseraInstance } from '@tessera-kit/core';
 import {
   baseStyles,
   focusRing,
@@ -8,7 +8,7 @@ import {
   tesseraContext,
   toast,
   visuallyHidden,
-} from '@tessera/elements';
+} from '@tessera-kit/elements';
 import { type CSSResultGroup, css, html, nothing, type PropertyDeclarations } from 'lit';
 import { repeat } from 'lit/directives/repeat.js';
 import type { NotesConfigValue } from '../config.js';

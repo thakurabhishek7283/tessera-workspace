@@ -1,5 +1,5 @@
-import type { TesseraInstance } from '@tessera/core';
-import '@tessera/elements/define';
+import type { TesseraInstance } from '@tessera-kit/core';
+import '@tessera-kit/elements/define';
 import { mountInstance, must, until } from '@tessera-internal/test-utils';
 import '../src/elements/index.js';
 import type { TesseraNote } from '../src/elements/note.js';
@@ -8,7 +8,7 @@ import type { NotesApi, NotesController } from '../src/index.js';
 
 export const plugins = {
   notes: () => import('../src/plugin.js'),
-  editor: () => import('@tessera/editor'),
+  editor: () => import('@tessera-kit/editor'),
 };
 
 export const doc = (text: string) => ({

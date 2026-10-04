@@ -1,5 +1,5 @@
-import type { TesseraConfig } from '@tessera/core';
-import '@tessera/elements/define';
+import type { TesseraConfig } from '@tessera-kit/core';
+import '@tessera-kit/elements/define';
 import { cleanup, mountInstance, must, until } from '@tessera-internal/test-utils';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';

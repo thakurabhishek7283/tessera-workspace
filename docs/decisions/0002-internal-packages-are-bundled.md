@@ -12,7 +12,7 @@ Kanban and notes both need optimistic, version-checked writes, and kanban needs 
 
 ## Consequences
 
-- Installing `@tessera/kanban` pulls in no package that does not exist on npm.
+- Installing `@tessera-kit/kanban` pulls in no package that does not exist on npm.
 - The shared code is tested once, in its own package, and used by two kits.
 - Two kits that bundle the same internal package each carry a copy. Both are small (see the size budgets), and a page rarely uses more than one of them.
 - Promoting an internal package to a public one later is a rename plus a changeset; nothing else has to move.

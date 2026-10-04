@@ -1,5 +1,5 @@
-import type { TesseraInstance, UserInfo } from '@tessera/core';
-import '@tessera/elements/define';
+import type { TesseraInstance, UserInfo } from '@tessera-kit/core';
+import '@tessera-kit/elements/define';
 import { deepQuery, mountInstance, must, until } from '@tessera-internal/test-utils';
 import '../src/elements/index.js';
 import type { TesseraKanbanElement } from '../src/elements/board.js';
@@ -9,7 +9,7 @@ import { type BoardController, evenRanks, type KanbanApi } from '../src/index.js
 
 export const plugins = {
   kanban: () => import('../src/plugin.js'),
-  editor: () => import('@tessera/editor'),
+  editor: () => import('@tessera-kit/editor'),
 };
 
 export const ada: UserInfo = { id: 'u-ada', name: 'Ada Lovelace' };

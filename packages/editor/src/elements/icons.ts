@@ -1,4 +1,4 @@
-import { registerIcons } from '@tessera/elements';
+import { registerIcons } from '@tessera-kit/elements';
 
 // 24×24 stroke icons (same style as the core set). Drawn for this kit.
 const ICONS: Record<string, string> = {

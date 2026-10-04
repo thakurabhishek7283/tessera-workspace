@@ -1,5 +1,5 @@
-import { createCollection } from '@tessera/storage';
-import { createTestInstance } from '@tessera/testing';
+import { createCollection } from '@tessera-kit/storage';
+import { createTestInstance } from '@tessera-kit/testing';
 import { describe, expect, it, vi } from 'vitest';
 import { z } from 'zod';
 import { createPersistence } from '../src/index.js';

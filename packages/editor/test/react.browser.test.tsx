@@ -1,4 +1,4 @@
-import '@tessera/elements/define';
+import '@tessera-kit/elements/define';
 import { cleanup, mountInstance, must, until } from '@tessera-internal/test-utils';
 import { createRef, type ReactElement, useRef } from 'react';
 import { createRoot } from 'react-dom/client';

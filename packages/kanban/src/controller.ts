@@ -6,8 +6,8 @@ import {
   type Store,
   type TesseraContext,
   TesseraError,
-} from '@tessera/core';
-import { type Collection, createCollection } from '@tessera/storage';
+} from '@tessera-kit/core';
+import { type Collection, createCollection } from '@tessera-kit/storage';
 import { createPersistence, type Kind } from '@tessera-internal/persist';
 import { generateNKeysBetween } from 'fractional-indexing';
 import type { KanbanConfigValue } from './config.js';

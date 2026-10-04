@@ -1,4 +1,4 @@
-import type { TesseraInstance, UserInfo } from '@tessera/core';
+import type { TesseraInstance, UserInfo } from '@tessera-kit/core';
 import type { TemplateResult } from 'lit';
 import type { CardField, CustomFieldConfig } from '../config.js';
 import type { Card, Label } from '../schemas.js';

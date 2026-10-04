@@ -3,14 +3,14 @@ import {
   type PluginLoader,
   type TesseraInstance,
   type ThemeMode,
-} from '@tessera/core';
-import { EditorConfig, type EditorHandle, type RichDoc } from '@tessera/editor';
-import type { TesseraEditorElement } from '@tessera/editor/elements';
-import { baseStyles, focusRing, toastErrors } from '@tessera/elements';
-import { KanbanConfig } from '@tessera/kanban';
-import { NotesConfig } from '@tessera/notes';
-import { createStorage, createUploads } from '@tessera/storage';
-import { createTransport } from '@tessera/transport';
+} from '@tessera-kit/core';
+import { EditorConfig, type EditorHandle, type RichDoc } from '@tessera-kit/editor';
+import type { TesseraEditorElement } from '@tessera-kit/editor/elements';
+import { baseStyles, focusRing, toastErrors } from '@tessera-kit/elements';
+import { KanbanConfig } from '@tessera-kit/kanban';
+import { NotesConfig } from '@tessera-kit/notes';
+import { createStorage, createUploads } from '@tessera-kit/storage';
+import { createTransport } from '@tessera-kit/transport';
 import {
   type CSSResultGroup,
   css,
@@ -41,9 +41,9 @@ const FEATURES: Array<{ id: FeatureId; label: string; schema: z.ZodType }> = [
 ];
 
 const plugins: Record<string, PluginLoader> = {
-  editor: () => import('@tessera/editor'),
-  notes: () => import('@tessera/notes'),
-  kanban: () => import('@tessera/kanban'),
+  editor: () => import('@tessera-kit/editor'),
+  notes: () => import('@tessera-kit/notes'),
+  kanban: () => import('@tessera-kit/kanban'),
 };
 
 const WELCOME: RichDoc = {

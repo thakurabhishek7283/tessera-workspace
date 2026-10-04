@@ -1,4 +1,4 @@
-import { definePlugin } from '@tessera/core';
+import { definePlugin } from '@tessera-kit/core';
 import { createNotesApi } from './api.js';
 import { NotesConfig } from './config.js';
 import { de } from './i18n/de.js';
@@ -12,7 +12,7 @@ const disposers = new WeakMap<NotesApi, () => void>();
  * runs on memory, IndexedDB or a REST backend.
  *
  * @example
- * createTessera(cfg, { plugins: { notes: () => import('@tessera/notes') } });
+ * createTessera(cfg, { plugins: { notes: () => import('@tessera-kit/notes') } });
  */
 export const notesPlugin = definePlugin({
   id: 'notes',

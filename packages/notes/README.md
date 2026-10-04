@@ -1,6 +1,6 @@
-# @tessera/notes
+# @tessera-kit/notes
 
-Sticky notes for the [Tessera](https://github.com/thakurabhishek7283/tessera) kit family, on a responsive grid or a free canvas. Notes are edited with [`@tessera/editor`](../editor/README.md).
+Sticky notes for the [Tessera](https://github.com/thakurabhishek7283/tessera) kit family, on a responsive grid or a free canvas. Notes are edited with [`@tessera-kit/editor`](../editor/README.md).
 
 - Grid layout with pinned notes first, or a free canvas with drag, resize and bring-to-front (all by keyboard too)
 - Seven colours, tags, pinning, archive and restore
@@ -12,7 +12,7 @@ Sticky notes for the [Tessera](https://github.com/thakurabhishek7283/tessera) ki
 ## Install
 
 ```sh
-pnpm add @tessera/notes @tessera/editor @tessera/core @tessera/elements
+pnpm add @tessera-kit/notes @tessera-kit/editor @tessera-kit/core @tessera-kit/elements
 ```
 
 The packages are not published to npm yet; see the [repository README](../../README.md) for building from source.
@@ -23,7 +23,7 @@ The packages are not published to npm yet; see the [repository README](../../REA
 
 ```html
 <script type="module">
-  import '@tessera/notes/elements';
+  import '@tessera-kit/notes/elements';
 </script>
 
 <tessera-notes></tessera-notes>
@@ -32,7 +32,7 @@ The packages are not published to npm yet; see the [repository README](../../REA
 ### React
 
 ```tsx
-import { Notes, useNotesBoard } from '@tessera/notes/react';
+import { Notes, useNotesBoard } from '@tessera-kit/notes/react';
 
 <Notes board="ideas" onNoteCreate={(e) => console.log(e.detail.note)} />;
 
@@ -44,7 +44,7 @@ const { state, controller } = useNotesBoard('ideas'); // for a custom UI
 ```ts
 const tessera = createTessera(
   { features: { editor: { enabled: true }, notes: { enabled: true, layout: 'free' } } },
-  { plugins: { editor: () => import('@tessera/editor'), notes: () => import('@tessera/notes') } },
+  { plugins: { editor: () => import('@tessera-kit/editor'), notes: () => import('@tessera-kit/notes') } },
 );
 await tessera.ready;
 const board = await tessera.features.notes.open('ideas');

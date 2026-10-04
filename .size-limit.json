@@ -1,14 +1,14 @@
 [
   {
-    "name": "@tessera/editor \u2014 elements and entry (own code)",
+    "name": "@tessera-kit/editor \u2014 elements and entry (own code)",
     "path": ["packages/editor/dist/elements/index.js", "packages/editor/dist/index.js"],
     "limit": "20 kB",
     "gzip": true,
     "ignore": [
-      "@tessera/core",
-      "@tessera/elements",
-      "@tessera/storage",
-      "@tessera/react",
+      "@tessera-kit/core",
+      "@tessera-kit/elements",
+      "@tessera-kit/storage",
+      "@tessera-kit/react",
       "lit",
       "@lit/context",
       "zod",
@@ -36,11 +36,11 @@
     ]
   },
   {
-    "name": "@tessera/editor \u2014 Tiptap engine (lazy, with dependencies; code highlighting and tables are separate)",
+    "name": "@tessera-kit/editor \u2014 Tiptap engine (lazy, with dependencies; code highlighting and tables are separate)",
     "path": "packages/editor/dist/engine-*.js",
     "limit": "170 kB",
     "ignore": [
-      "@tessera/core",
+      "@tessera-kit/core",
       "zod",
       "lit",
       "lowlight",
@@ -50,15 +50,15 @@
     "gzip": true
   },
   {
-    "name": "@tessera/kanban \u2014 entry + plugin",
+    "name": "@tessera-kit/kanban \u2014 entry + plugin",
     "path": "packages/kanban/dist/index.js",
     "limit": "22 kB",
     "ignore": [
-      "@tessera/core",
-      "@tessera/elements",
-      "@tessera/storage",
-      "@tessera/react",
-      "@tessera/editor",
+      "@tessera-kit/core",
+      "@tessera-kit/elements",
+      "@tessera-kit/storage",
+      "@tessera-kit/react",
+      "@tessera-kit/editor",
       "lit",
       "@lit/context",
       "zod",
@@ -69,15 +69,15 @@
     "gzip": true
   },
   {
-    "name": "@tessera/kanban \u2014 elements",
+    "name": "@tessera-kit/kanban \u2014 elements",
     "path": "packages/kanban/dist/elements/index.js",
     "limit": "27 kB",
     "ignore": [
-      "@tessera/core",
-      "@tessera/elements",
-      "@tessera/storage",
-      "@tessera/react",
-      "@tessera/editor",
+      "@tessera-kit/core",
+      "@tessera-kit/elements",
+      "@tessera-kit/storage",
+      "@tessera-kit/react",
+      "@tessera-kit/editor",
       "lit",
       "@lit/context",
       "zod",
@@ -88,15 +88,15 @@
     "gzip": true
   },
   {
-    "name": "@tessera/notes \u2014 entry + plugin",
+    "name": "@tessera-kit/notes \u2014 entry + plugin",
     "path": "packages/notes/dist/index.js",
     "limit": "15 kB",
     "ignore": [
-      "@tessera/core",
-      "@tessera/elements",
-      "@tessera/storage",
-      "@tessera/react",
-      "@tessera/editor",
+      "@tessera-kit/core",
+      "@tessera-kit/elements",
+      "@tessera-kit/storage",
+      "@tessera-kit/react",
+      "@tessera-kit/editor",
       "lit",
       "@lit/context",
       "zod",
@@ -107,15 +107,15 @@
     "gzip": true
   },
   {
-    "name": "@tessera/notes \u2014 elements",
+    "name": "@tessera-kit/notes \u2014 elements",
     "path": "packages/notes/dist/elements/index.js",
     "limit": "15 kB",
     "ignore": [
-      "@tessera/core",
-      "@tessera/elements",
-      "@tessera/storage",
-      "@tessera/react",
-      "@tessera/editor",
+      "@tessera-kit/core",
+      "@tessera-kit/elements",
+      "@tessera-kit/storage",
+      "@tessera-kit/react",
+      "@tessera-kit/editor",
       "lit",
       "@lit/context",
       "zod",

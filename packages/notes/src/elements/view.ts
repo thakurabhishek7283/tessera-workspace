@@ -1,5 +1,5 @@
-import type { TesseraInstance } from '@tessera/core';
-import type { ToolbarItem } from '@tessera/editor';
+import type { TesseraInstance } from '@tessera-kit/core';
+import type { ToolbarItem } from '@tessera-kit/editor';
 import type { NoteColor } from '../schemas.js';
 
 /** Everything a note element needs from the board that renders it. */

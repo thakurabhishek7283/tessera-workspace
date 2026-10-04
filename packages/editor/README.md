@@ -1,4 +1,4 @@
-# @tessera/editor
+# @tessera-kit/editor
 
 A rich-text editor for the [Tessera](https://github.com/thakurabhishek7283/tessera) kit family: a headless API, a `<tessera-editor>` web component and React bindings. Tiptap is loaded the first time an editor is created, so an app that only shows stored documents never pays for it.
 
@@ -13,10 +13,10 @@ A rich-text editor for the [Tessera](https://github.com/thakurabhishek7283/tesse
 ## Install
 
 ```sh
-pnpm add @tessera/editor @tessera/core @tessera/elements
+pnpm add @tessera-kit/editor @tessera-kit/core @tessera-kit/elements
 ```
 
-`@tessera/core` and `@tessera/elements` are peer dependencies, so every kit on a page shares one instance. The packages are not published to npm yet; see the [repository README](../../README.md) for building from source.
+`@tessera-kit/core` and `@tessera-kit/elements` are peer dependencies, so every kit on a page shares one instance. The packages are not published to npm yet; see the [repository README](../../README.md) for building from source.
 
 ## Use
 
@@ -24,7 +24,7 @@ pnpm add @tessera/editor @tessera/core @tessera/elements
 
 ```html
 <script type="module">
-  import '@tessera/editor/elements';
+  import '@tessera-kit/editor/elements';
 </script>
 
 <tessera-editor id="doc" placeholder="Start writing…"></tessera-editor>
@@ -40,7 +40,7 @@ Importing the elements module is enough: a bare `<tessera-editor>` runs on the i
 ### React
 
 ```tsx
-import { Editor, RichText } from '@tessera/editor/react';
+import { Editor, RichText } from '@tessera-kit/editor/react';
 
 <Editor
   value={doc}
@@ -56,11 +56,11 @@ The wrappers render empty tags on the server and attach properties and events af
 ### Headless
 
 ```ts
-import { createTessera } from '@tessera/core';
+import { createTessera } from '@tessera-kit/core';
 
 const tessera = createTessera(
   { features: { editor: { enabled: true, mentions: { enabled: true } } } },
-  { plugins: { editor: () => import('@tessera/editor') } },
+  { plugins: { editor: () => import('@tessera-kit/editor') } },
 );
 await tessera.ready;
 
