@@ -1,6 +1,6 @@
 {
   "name": "@tessera-kit/editor",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Rich-text editor kit for Tessera: a headless API, a <tessera-editor> web component and React bindings",
   "license": "MIT",
   "author": "Abhishek Thakur",
