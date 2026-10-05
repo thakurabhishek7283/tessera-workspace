@@ -1,6 +1,6 @@
 [
   {
-    "name": "@tessera-kit/editor \u2014 elements and entry (own code)",
+    "name": "@tessera-kit/editor — elements and entry (own code)",
     "path": ["packages/editor/dist/elements/index.js", "packages/editor/dist/index.js"],
     "limit": "20 kB",
     "gzip": true,
@@ -36,7 +36,14 @@
     ]
   },
   {
-    "name": "@tessera-kit/editor \u2014 Tiptap engine (lazy, with dependencies; code highlighting and tables are separate)",
+    "name": "@tessera-kit/editor — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/editor/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
+  },
+  {
+    "name": "@tessera-kit/editor — Tiptap engine (lazy, with dependencies; code highlighting and tables are separate)",
     "path": "packages/editor/dist/engine-*.js",
     "limit": "170 kB",
     "ignore": [
@@ -50,7 +57,7 @@
     "gzip": true
   },
   {
-    "name": "@tessera-kit/kanban \u2014 entry + plugin",
+    "name": "@tessera-kit/kanban — entry + plugin",
     "path": "packages/kanban/dist/index.js",
     "limit": "22 kB",
     "ignore": [
@@ -69,7 +76,7 @@
     "gzip": true
   },
   {
-    "name": "@tessera-kit/kanban \u2014 elements",
+    "name": "@tessera-kit/kanban — elements",
     "path": "packages/kanban/dist/elements/index.js",
     "limit": "27 kB",
     "ignore": [
@@ -88,7 +95,14 @@
     "gzip": true
   },
   {
-    "name": "@tessera-kit/notes \u2014 entry + plugin",
+    "name": "@tessera-kit/kanban — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/kanban/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
+  },
+  {
+    "name": "@tessera-kit/notes — entry + plugin",
     "path": "packages/notes/dist/index.js",
     "limit": "15 kB",
     "ignore": [
@@ -107,7 +121,7 @@
     "gzip": true
   },
   {
-    "name": "@tessera-kit/notes \u2014 elements",
+    "name": "@tessera-kit/notes — elements",
     "path": "packages/notes/dist/elements/index.js",
     "limit": "15 kB",
     "ignore": [
@@ -124,5 +138,12 @@
       "fractional-indexing"
     ],
     "gzip": true
+  },
+  {
+    "name": "@tessera-kit/notes — autoload (tag registrations only; each tag's chunk loads on first use)",
+    "path": "packages/notes/dist/autoload.js",
+    "limit": "0.3 kB",
+    "gzip": true,
+    "ignore": ["@tessera-kit/elements", "./elements/tags"]
   }
 ]

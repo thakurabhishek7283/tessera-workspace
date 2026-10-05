@@ -3,6 +3,7 @@ import { type CSSResultGroup, css, html, type PropertyDeclarations } from 'lit';
 import { unsafeHTML } from 'lit/directives/unsafe-html.js';
 import { renderStatic } from '../render.js';
 import type { RichDoc } from '../rich-doc.js';
+import { version } from '../version.js';
 import { proseStyles } from './styles.js';
 
 /**
@@ -13,6 +14,8 @@ import { proseStyles } from './styles.js';
  * @csspart content - the rendered document
  */
 export class TesseraRichText extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = { doc: { attribute: false } };
   static override styles: CSSResultGroup = [
     baseStyles,

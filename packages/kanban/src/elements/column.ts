@@ -10,6 +10,7 @@ import {
 import { classMap } from 'lit/directives/class-map.js';
 import { repeat } from 'lit/directives/repeat.js';
 import { type Card, type Column, TOKEN_COLORS, type TokenColor } from '../schemas.js';
+import { version } from '../version.js';
 import type { TesseraKanbanCard } from './card.js';
 import { colorStyles } from './styles.js';
 import type { KanbanView } from './view.js';
@@ -25,6 +26,8 @@ let uid = 0;
  * @csspart column @csspart column-header @csspart add-card
  */
 export class TesseraKanbanColumn extends LitElement {
+  static tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     column: { attribute: false },
     cards: { attribute: false },

@@ -14,6 +14,7 @@ import { repeat } from 'lit/directives/repeat.js';
 import type { NotesConfigValue } from '../config.js';
 import type { Note } from '../schemas.js';
 import type { NotesApi, NotesController } from '../types.js';
+import { version } from '../version.js';
 import type { TesseraNote } from './note.js';
 import type { NotesView } from './view.js';
 
@@ -29,6 +30,8 @@ import type { NotesView } from './view.js';
  * @slot empty - shown when there are no notes
  */
 export class TesseraNotesElement extends TesseraElement {
+  static override tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     board: { attribute: 'board' },
     readonly: { type: Boolean, reflect: true },

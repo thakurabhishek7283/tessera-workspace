@@ -71,6 +71,22 @@ handle.getMarkdown();
 
 `service.renderStatic(doc)` returns sanitized HTML and `service.toPlainText(doc)` returns text, both without loading Tiptap.
 
+## Entry points
+
+| Import | What it does |
+| --- | --- |
+| `@tessera-kit/editor/elements` | Defines every editor element. |
+| `@tessera-kit/editor/elements/<tag>` | Defines one element and the ones it renders, for importing exactly what a page uses: `tessera-editor`, `tessera-rich-text`. |
+| `@tessera-kit/editor/autoload` | Only registers the tags (109 B gzip). Each element downloads the first time it appears on the page, which suits plain HTML pages. |
+| `@tessera-kit/editor` | The headless API and the plugin, without elements. |
+| `@tessera-kit/editor/react` | React components. |
+
+```html
+<script type="module">
+  import '@tessera-kit/editor/autoload';
+</script>
+```
+
 ## Configuration
 
 Options of the `editor` feature. `{ enabled: true }` alone is valid.

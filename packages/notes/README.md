@@ -53,6 +53,22 @@ await board.move(note.id, 40, 80);
 await board.history.undo();
 ```
 
+## Entry points
+
+| Import | What it does |
+| --- | --- |
+| `@tessera-kit/notes/elements` | Defines every notes element, and the editor elements that notes are written with. |
+| `@tessera-kit/notes/elements/<tag>` | Defines one element and the ones it renders, for importing exactly what a page uses: `tessera-note`, `tessera-notes`. |
+| `@tessera-kit/notes/autoload` | Only registers the tags (98 B gzip). Each element downloads the first time it appears on the page, which suits plain HTML pages. |
+| `@tessera-kit/notes` | The headless API and the plugin, without elements. |
+| `@tessera-kit/notes/react` | React components. |
+
+```html
+<script type="module">
+  import '@tessera-kit/notes/autoload';
+</script>
+```
+
 ## Configuration
 
 <!-- config:start -->

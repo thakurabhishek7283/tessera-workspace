@@ -9,6 +9,7 @@ import {
   type PropertyDeclarations,
 } from 'lit';
 import { MIN_HEIGHT, MIN_WIDTH, NOTE_COLORS, type Note, type NoteColor } from '../schemas.js';
+import { version } from '../version.js';
 import type { NotesView } from './view.js';
 
 const COLOR_HUES: Record<NoteColor, string> = {
@@ -41,6 +42,8 @@ interface Geometry {
  * @csspart note @csspart header @csspart body @csspart footer
  */
 export class TesseraNote extends LitElement {
+  static tesseraVersion: string = version;
+
   static override properties: PropertyDeclarations = {
     note: { attribute: false },
     view: { attribute: false },
