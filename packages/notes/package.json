@@ -1,6 +1,6 @@
 {
   "name": "@tessera-kit/notes",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Sticky notes kit for Tessera: a headless notes API, a <tessera-notes> web component (grid or free canvas) and React bindings",
   "license": "MIT",
   "author": "Abhishek Thakur",
