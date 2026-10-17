@@ -19,7 +19,7 @@
   },
   "devDependencies": {
     "@tessera-internal/test-utils": "workspace:*",
-    "@types/node": "^26.6.4",
+    "@types/node": "^26.6.5",
     "@vitest/browser-playwright": "^5.0.3",
     "lit": "^3.3.0",
     "playwright": "^1.63.0",
